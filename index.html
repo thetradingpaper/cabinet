@@ -458,7 +458,7 @@
   function unlockGate(e) {
     e.preventDefault();
     const pass = document.getElementById('gate-pass').value;
-    if (pass === '111') {
+    if (pass === '111' || pass === 'salamandra123') {
       localStorage.setItem('cabinet_auth', 'true');
       document.getElementById('password-gate').style.display = 'none';
       document.body.style.overflow = '';

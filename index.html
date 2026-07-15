@@ -1539,6 +1539,32 @@ var fe=document.getElementById('me-fees');if(fe){var bd=(D.feesByBook||[]).map(f
     
     // Sort all by date descending (newest first).
     allTx.sort(function(a, b) { return new Date(b.date) - new Date(a.date); });
+
+    // Realized P/L per SELL — average cost method, fees on BOTH sides included:
+    // buy cost = shares×price + buy fee; on sell: P/L = (shares×price − sell fee) − proportional cost basis.
+    (function(){
+      var asc = allTx.slice().sort(function(a,b){ return new Date(a.date) - new Date(b.date); });
+      var pos = {}; // bookKey|ticker → { sh, cost }
+      asc.forEach(function(tx){
+        if (!tx.ticker) return;
+        var k = tx.bookKey + '|' + tx.ticker;
+        if (tx.type === 'buy') {
+          var st = pos[k] || (pos[k] = { sh: 0, cost: 0 });
+          st.sh   += (+tx.shares || 0);
+          st.cost += (+tx.shares || 0) * (+tx.price || 0) + (+tx.commission || 0);
+        } else if (tx.type === 'sell') {
+          var st2 = pos[k];
+          if (st2 && st2.sh > 0) {
+            var s = Math.min(+tx.shares || 0, st2.sh);
+            var costOut  = st2.cost * (s / st2.sh);
+            var proceeds = s * (+tx.price || 0) - (+tx.commission || 0);
+            tx._pl    = +(proceeds - costOut).toFixed(2);
+            tx._plPct = costOut > 0 ? ((proceeds - costOut) / costOut) * 100 : 0;
+            st2.sh -= s; st2.cost -= costOut;
+          }
+        }
+      });
+    })();
     
     // Load saved filters
     loadFilters();
@@ -1665,6 +1691,9 @@ var fe=document.getElementById('me-fees');if(fe){var bd=(D.feesByBook||[]).map(f
     }
     
     if (tx.type === 'sell') {
+      const plTxt = (tx._pl !== undefined)
+        ? ` · <strong style="color:${tx._pl >= 0 ? 'var(--green)' : 'var(--red)'}">P/L ${tx._pl >= 0 ? '+' : '−'}${fmtMoney(Math.abs(tx._pl))} (${tx._pl >= 0 ? '+' : '−'}${Math.abs(tx._plPct).toFixed(2)}%)</strong>`
+        : '';
       return `<div class="tx-hist">
         ${date}
         <span class="tx-badge badge-sell">SELL</span>
@@ -1672,7 +1701,7 @@ var fe=document.getElementById('me-fees');if(fe){var bd=(D.feesByBook||[]).map(f
         <span class="tx-line">
           <strong>${tx.ticker}</strong> ·
           ${tx.shares} sh @ ${fmtMoney(tx.price)}${tx.commission ? ` · <span class="muted">fee ${fmtMoney(tx.commission)}</span>` : ''} ·
-          received <strong>${fmtMoney(totalSellRecv)}</strong>
+          received <strong>${fmtMoney(totalSellRecv)}</strong>${plTxt}
         </span>
       </div>`;
     }
@@ -1757,36 +1786,4 @@ var fe=document.getElementById('me-fees');if(fe){var bd=(D.feesByBook||[]).map(f
         <div class="summary-grid" style="margin-bottom: 24px;">
           <div class="summary-card">
             <div class="summary-label">სუფთა ჩარიცხვა</div>
-            <div class="summary-value" style="color:var(--green);">${fmtMoney(deposits)}</div>
-          </div>
-          <div class="summary-card">
-            <div class="summary-label">სუფთა გატანა</div>
-            <div class="summary-value" style="color:var(--muted);">${fmtMoney(withdrawals)}</div>
-          </div>
-          <div class="summary-card">
-            <div class="summary-label">დივიდენდები</div>
-            <div class="summary-value" style="color:#0284c7;">${fmtMoney(dividends)}</div>
-          </div>
-          <div class="summary-card">
-            <div class="summary-label">ჯამური საკომისიო</div>
-            <div class="summary-value" style="color:var(--red);">${fmtMoney(fees)}</div>
-          </div>
-          <div class="summary-card">
-            <div class="summary-label">ნაყიდი აქტივები</div>
-            <div class="summary-value">${fmtMoney(bought)}</div>
-          </div>
-          <div class="summary-card">
-            <div class="summary-label">გაყიდული აქტივები</div>
-            <div class="summary-value">${fmtMoney(sold)}</div>
-          </div>
-        </div>
-      `;
-    }
-    
-    const listContainer = document.getElementById('hist-tx-list');
-    const pagerContainer = document.getElementById('hist-pager');
-    
-    if (!listContainer) return;
-    
-    if (filtered.length === 0) {
-      listContainer.innerHTML = `<div class="empty
+            <div class="s

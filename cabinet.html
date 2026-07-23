@@ -1,0 +1,2168 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<script src="js/gate.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Trading Paper · ლაშა ფხაკაძე</title>
+<meta name="description" content="The Trading Paper — ლაშა ფხაკაძის პირადი საინვესტიციო ჟურნალი. სამი წიგნი: BOG, TBC, GALT. ცოცხალი ღირებულება, P/L და უკუგება.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#b91c1c">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Trading Paper · ლაშა ფხაკაძე">
+<meta property="og:description" content="პირადი საინვესტიციო ჟურნალი — ცოცხალი პორტფელი.">
+<meta property="og:image" content="images/lasha.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4f1ea'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='22' font-weight='900' text-anchor='middle' fill='%23b91c1c'%3ET%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/enhance.css?v=20260722c">
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="js/theme.js?v=20260722c"></script>
+<style>
+
+/* ===== BOOK HEADER (PDF-style) ===== */
+.book-header {
+  background: var(--paper);
+  border-top: 3px double var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 14px 0 10px;
+  margin: 32px 0 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.book-header .book-title {
+  font-family: 'Noto Serif Georgian', serif;
+  font-weight: 900;
+  font-size: 26px;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.book-header .book-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--red);
+  margin-right: 4px;
+  vertical-align: middle;
+  position: relative;
+  top: -2px;
+}
+.book-header .book-sub {
+  font-family: 'Noto Sans Georgian', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+.book-header .book-meta {
+  font-family: 'Noto Sans Georgian', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: right;
+}
+
+/* ===== AWAITING STAT BOXES (Galt section only — separate from .stat-banner) ===== */
+.awaiting-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--border);
+  border-top: none;
+  background: var(--paper);
+  margin-bottom: 0;
+}
+@media (max-width: 700px) { .awaiting-row { grid-template-columns: repeat(2, 1fr); } }
+
+.awaiting-box {
+  padding: 14px 18px 12px;
+  border-right: 1px solid var(--border);
+}
+.awaiting-box:last-child { border-right: none; }
+.awaiting-box .stat-label {
+  font-family: 'Noto Sans Georgian', sans-serif;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+  display: block;
+}
+.awaiting-box .stat-val {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--ink);
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+.awaiting-box .stat-val.pos { color: var(--green); }
+.awaiting-box .stat-val.neg { color: var(--red); }
+.awaiting-box .stat-note {
+  font-family: 'Noto Sans Georgian', sans-serif;
+  font-size: 9px;
+  color: var(--muted);
+  margin-top: 3px;
+  display: block;
+}
+
+/* ===== HOLDINGS SECTION HEADER ===== */
+.holdings-head {
+  border-top: 2px solid var(--rule);
+  border-bottom: 1px solid var(--border);
+  padding: 6px 0;
+  margin: 20px 0 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.holdings-head .hl-title {
+  font-family: 'Noto Sans Georgian', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--ink);
+}
+.holdings-head .hl-summary {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
+.holdings-head .hl-summary span { margin-left: 14px; }
+.holdings-head .hl-summary .pos { color: var(--green); }
+.holdings-head .hl-summary .neg { color: var(--red); }
+
+/* ===== HOLDING CARDS GRID ===== */
+.hcards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 0;
+}
+@media (max-width: 900px) { .hcards { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 580px) { .hcards { grid-template-columns: 1fr; } }
+
+.hcard {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--ink);
+  padding: 13px 15px 11px;
+  font-family: 'Noto Sans Georgian', sans-serif;
+}
+.hcard-head {
+  border-bottom: 1px dashed var(--border);
+  padding-bottom: 7px;
+  margin-bottom: 8px;
+}
+.hcard-ticker {
+  display: block;
+  font-family: 'Noto Serif Georgian', serif;
+  font-weight: 900;
+  font-size: 20px;
+  color: var(--ink);
+  letter-spacing: -0.3px;
+  line-height: 1.1;
+}
+.hcard-name {
+  display: block;
+  font-size: 8.5px;
+  letter-spacing: 1.2px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-top: 2px;
+  line-height: 1.3;
+}
+.hcard-tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11.5px;
+}
+.hcard-tbl td {
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.hcard-tbl tr:last-child td { border-bottom: none; }
+.hcard-tbl td:first-child {
+  color: var(--muted);
+  letter-spacing: 1px;
+  font-size: 9.5px;
+  text-transform: uppercase;
+}
+.hcard-tbl td.num {
+  text-align: right;
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-weight: 600;
+  color: var(--ink);
+}
+.hcard-tbl td.num.pos { color: var(--green); }
+.hcard-tbl td.num.neg { color: var(--red); }
+
+/* ===== BOTTOM SECTION: Allocation + Mountain side by side ===== */
+.alloc-mountain {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-top: 3px double var(--rule);
+  border-bottom: 3px double var(--rule);
+  background: var(--paper);
+  margin: 20px 0 28px;
+}
+@media (max-width: 800px) { .alloc-mountain { grid-template-columns: 1fr; } }
+
+.alloc-panel {
+  padding: 20px 22px;
+  border-right: 1px solid var(--border);
+}
+.mountain-panel {
+  padding: 20px 22px;
+}
+
+.panel-label {
+  font-family: 'Noto Serif Georgian', serif;
+  font-weight: 900;
+  font-size: 17px;
+  margin-bottom: 3px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.panel-label em {
+  font-weight: 400;
+  color: var(--muted);
+  font-size: 14px;
+}
+.panel-sublabel {
+  font-family: 'Noto Sans Georgian', sans-serif;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+  display: block;
+}
+
+/* Allocation legend table */
+.alloc-chart-wrap {
+  height: 200px;
+  position: relative;
+  margin-bottom: 10px;
+}
+.alloc-legend {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+  font-family: 'Noto Sans Georgian', sans-serif;
+  margin-top: 4px;
+}
+.alloc-legend td {
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.alloc-legend tr:last-child td { border-bottom: none; }
+.alloc-legend .al-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  display: inline-block;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+.alloc-legend .al-name {
+  font-weight: 600;
+  color: var(--ink);
+  font-family: 'Noto Serif Georgian', serif;
+}
+.alloc-legend .al-val {
+  text-align: right;
+  font-family: ui-monospace, monospace;
+  font-weight: 700;
+  color: var(--ink);
+}
+.alloc-legend .al-pct {
+  text-align: right;
+  color: var(--muted);
+  font-size: 10px;
+  padding-left: 8px;
+}
+
+/* Mountain chart */
+.mountain-chart-wrap {
+  height: 240px;
+  position: relative;
+}
+
+/* ===== LIVE STAMP ===== */
+.live-stamp {
+  font-family: 'Noto Sans Georgian', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--red);
+  text-align: right;
+  margin-bottom: 6px;
+}
+
+/* ===== SECTION DIVIDER ===== */
+.book-divider {
+  border: none;
+  border-top: 3px double var(--rule);
+  margin: 44px 0 0;
+}
+
+/* ===== Accordion (live prices / transactions) ===== */
+.acc {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--rule);
+  margin: 16px 0;
+  overflow: hidden;
+}
+.acc[open] { border-bottom: 2px solid var(--rule); }
+.acc > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'Noto Sans Georgian', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink);
+  user-select: none;
+  transition: background 0.15s;
+}
+.acc > summary::-webkit-details-marker { display: none; }
+.acc > summary:hover { background: rgba(0,0,0,0.025); }
+.acc > summary::after {
+  content: '+';
+  font-family: serif;
+  font-weight: 400;
+  font-size: 22px;
+  color: var(--red);
+  line-height: 1;
+}
+.acc[open] > summary::after { content: '−'; }
+.acc .acc-body { padding: 6px 20px 20px; border-top: 1px solid var(--border); }
+.acc .acc-sub {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--muted);
+  font-weight: 400;
+  margin-left: 8px;
+  text-transform: uppercase;
+}
+
+/* ===== Transaction list ===== */
+.tx-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-top: 2px solid var(--rule);
+  border-bottom: 1px solid var(--border);
+  padding: 6px 0;
+  margin: 18px 0 10px;
+}
+.tx-title {
+  font-family: 'Noto Sans Georgian', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0;
+}
+.history-btn {
+  font-family: 'Noto Sans Georgian', sans-serif;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--red);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.history-btn:hover { text-decoration: underline; }
+
+/* ===== Rules box ===== */
+.rules-box {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  padding: 14px 18px;
+  margin: 14px 0 32px;
+  font-family: 'Noto Sans Georgian', sans-serif;
+  font-size: 12px;
+}
+.rules-box .rules-title {
+  font-family: 'Noto Serif Georgian', serif;
+  font-weight: 700;
+  font-size: 13px;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+.rules-box ul { padding-left: 18px; }
+.rules-box li { margin-bottom: 4px; color: var(--muted); }
+.rules-box li strong { color: var(--ink); }
+
+</style>
+<style>@media print{#tp-gate{display:none!important;}.no-print,.acc,nav,button,.tp-arch,.tp-archwrap{display:none!important;}html,body{overflow:visible!important;background:#fff!important;}.total-hero,.book-header,.alloc-mountain,.awaiting-row,.rules-box,.hcard,.hcards,table,tr{break-inside:avoid;page-break-inside:avoid;}}</style>
+<style>.tp-archwrap{margin-top:4px;}.tp-arch{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}@media(max-width:900px){.tp-arch{grid-template-columns:repeat(3,1fr);}}@media(max-width:560px){.tp-arch{grid-template-columns:repeat(2,1fr);}}.tp-card{background:var(--paper);border:1px solid var(--border);padding:15px 10px;text-align:center;font-family:'Noto Sans Georgian',sans-serif;}.tp-card.latest{border:2px solid var(--red);background:#fff8f4;}.tp-card .n{font-family:'Noto Serif Georgian',serif;font-weight:900;font-size:25px;color:var(--ink);line-height:1;}.tp-card .dt{font-size:9.5px;color:var(--muted);font-style:italic;margin:5px 0 9px;}.tp-card a{display:inline-block;font-size:9px;letter-spacing:1px;padding:5px 8px;border:1px solid var(--border);color:var(--ink);text-decoration:none;text-transform:uppercase;margin:2px;}.tp-card a.dl{color:var(--red);border-color:var(--red);font-weight:700;}</style>
+<style>
+header.masthead, header.tpm, nav.tpm-subnav, .tpm-top, .tpm-row, .tpm-nav, #tpm-sticky, #tp-mini { display: none !important; }
+body { padding-top: 0 !important; margin-top: 0 !important; }
+.container { padding-top: 15px !important; }
+.tp-tabs { margin-top: 0 !important; }
+</style>
+</head>
+<body>
+
+<main class="container">
+
+  <!-- Engagement Features Portal -->
+  <div id="engagement-portal" style="display:none; margin: 20px 0 28px;"></div>
+
+  <!-- ============================================================ -->
+  <!-- VIEW SWITCHER · მთლიანი პორტფელი / აქტივების დეტალები          -->
+  <!-- ============================================================ -->
+  <style>
+    .tp-tabs{display:flex;gap:6px;border-bottom:2px solid var(--rule);margin:14px 0 2px;flex-wrap:wrap;}
+    .tp-tab-btn{font-family:'Noto Sans Georgian',sans-serif;font-size:13px;font-weight:700;letter-spacing:.3px;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;padding:9px 15px;cursor:pointer;margin-bottom:-2px;transition:color .15s;}
+    .tp-tab-btn:hover{color:var(--ink);}
+    .tp-tab-btn.active{color:var(--ink);border-bottom-color:var(--red);}
+    .tp-tab-pane{display:none;}
+    .tp-tab-pane.active{display:block;}
+    /* consolidated all-assets table */
+    .assets-head{border-top:3px double var(--rule);border-bottom:1px solid var(--border);padding:14px 0 10px;margin:14px 0 4px;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;}
+    .assets-head .ah-t{font-family:'Noto Serif Georgian',serif;font-weight:900;font-size:22px;color:var(--ink);}
+    .assets-head .ah-t em{font-weight:400;font-style:italic;color:var(--muted);font-size:14px;margin-left:6px;}
+    .assets-sub{font-family:'Noto Sans Georgian',sans-serif;font-size:11.5px;color:var(--muted);line-height:1.6;margin:4px 0 12px;}
+    .tp-assets{width:100%;border-collapse:collapse;font-family:'Noto Sans Georgian',sans-serif;background:var(--paper);border:1px solid var(--border);}
+    .tp-assets th{text-align:left;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:11px 14px;border-bottom:1px solid var(--border);white-space:nowrap;}
+    .tp-assets th.num,.tp-assets td.num{text-align:right;font-family:ui-monospace,'SF Mono',Menlo,monospace;}
+    .tp-assets td{padding:11px 14px;border-bottom:1px solid rgba(0,0,0,.05);font-size:13px;}
+    .tp-assets tbody tr:last-child td{border-bottom:none;}
+    .tp-assets tbody tr:hover{background:rgba(0,0,0,.02);}
+    .tp-assets .sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:8px;vertical-align:middle;}
+    .tp-assets .tk{font-family:'Noto Serif Georgian',serif;font-weight:800;color:var(--ink);}
+    .tp-assets .nm{display:block;font-size:8.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-top:2px;}
+    .tp-assets .bk{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:3px;padding:1px 7px;}
+    .tp-assets td.num.pos{color:var(--green);}.tp-assets td.num.neg{color:var(--red);}
+    .tp-assets tfoot td{padding:12px 14px;border-top:2px solid var(--rule);font-weight:700;font-size:13px;}
+    .tp-assets tfoot td.num{font-family:ui-monospace,monospace;}
+    .tp-assets tfoot td.num.pos{color:var(--green);}.tp-assets tfoot td.num.neg{color:var(--red);}
+    .assets-note{font-family:'Noto Sans Georgian',sans-serif;font-size:10.5px;color:var(--muted);margin:12px 0 26px;line-height:1.6;}
+    /* grouped-by-book asset accordion (აქტივების დეტალები) */
+    .asset-group{margin:0 0 16px;border:1px solid var(--border);border-top:2px solid var(--rule);background:var(--paper);}
+    .ag-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 10px;padding:10px 14px;border-bottom:1px solid var(--border);background:rgba(0,0,0,.015);}
+    .ag-grand{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 10px;padding:12px 14px;margin:0 0 14px;border:1px solid var(--border);border-top:3px solid var(--ink);background:rgba(0,0,0,.02);}
+    .ag-grand .ag-grand-l{font-family:'Noto Serif Georgian',serif;font-weight:900;font-size:14px;color:var(--ink);}
+    .ag-grand .ag-sum{font-family:ui-monospace,monospace;font-size:12px;color:var(--muted);}
+    .ag-grand .pos{color:var(--green);font-weight:700;}.ag-grand .neg{color:var(--red);font-weight:700;}
+    .ag-head .ag-book{font-family:'Noto Serif Georgian',serif;font-weight:900;font-size:15px;color:var(--ink);display:flex;align-items:center;gap:8px;}
+    .ag-head .ag-book .dot{width:9px;height:9px;border-radius:50%;display:inline-block;}
+    .ag-head .ag-sum{font-family:ui-monospace,monospace;font-size:11px;color:var(--muted);white-space:nowrap;}
+    .ag-head .ag-sum .pos{color:var(--green);}.ag-head .ag-sum .neg{color:var(--red);}
+    details.ag-row{border-bottom:1px solid rgba(0,0,0,.05);}
+    details.ag-row:last-child{border-bottom:none;}
+    details.ag-row>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:12px;padding:11px 14px;font-family:'Noto Sans Georgian',sans-serif;}
+    details.ag-row>summary::-webkit-details-marker{display:none;}
+    details.ag-row>summary:hover{background:rgba(0,0,0,.02);}
+    details.ag-row[open]>summary{background:rgba(0,0,0,.03);}
+    .ag-tk{font-family:'Noto Serif Georgian',serif;font-weight:800;font-size:15px;color:var(--ink);}
+    .ag-nm{display:block;font-size:8.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-top:1px;}
+    .ag-val{font-family:ui-monospace,monospace;font-weight:700;font-size:13px;color:var(--ink);text-align:right;white-space:nowrap;}
+    .ag-day{font-family:ui-monospace,monospace;font-size:12px;text-align:right;white-space:nowrap;min-width:72px;}
+    .ag-day.pos{color:var(--green);}.ag-day.neg{color:var(--red);}
+    .ag-detail{padding:0 14px 12px;}
+    .ag-detail .hcard{border:1px solid var(--border);border-top:1px dashed var(--border);}
+    .ag-empty{padding:14px;font-family:'Noto Sans Georgian',sans-serif;font-size:12px;color:var(--muted);}
+  </style>
+  <div class="tp-tabs no-print" role="tablist">
+    <button class="tp-tab-btn active" data-pane="tab-total" role="tab" aria-selected="true">მთლიანი პორტფელი</button>
+    <button class="tp-tab-btn" data-pane="tab-assets" role="tab" aria-selected="false">აქტივების დეტალები</button>
+    <button class="tp-tab-btn" data-pane="tab-history" role="tab" aria-selected="false">ტრანზაქციების ისტორია</button>
+    <button class="tp-tab-btn" data-pane="tab-issues" role="tab" aria-selected="false">Issues</button>
+  </div>
+
+  <div id="tab-total" class="tp-tab-pane active">
+
+  <!-- ============================================================ -->
+  <!-- TOTAL PORTFOLIO HERO (above all books)                       -->
+  <!-- ============================================================ -->
+  <style>
+    .total-hero{background:var(--paper);border:1px solid var(--border);border-top:3px double var(--rule);border-bottom:3px double var(--rule);padding:22px 26px 26px;margin:14px 0 6px;}
+    .th-top{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid var(--border);padding-bottom:12px;margin-bottom:18px;}
+    .th-eyebrow{font-family:'Noto Sans Georgian',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-weight:700;}
+    .th-person{font-family:'Noto Serif Georgian',serif;font-weight:900;font-size:30px;letter-spacing:-0.5px;line-height:1.05;margin-top:2px;}
+    .th-edit{font-size:15px;color:var(--muted);text-decoration:none;margin-left:10px;border:1px solid var(--border);border-radius:6px;padding:1px 8px;vertical-align:middle;transition:all .15s;}
+    .th-edit:hover{color:var(--red);border-color:var(--red);}
+    .th-sub{font-family:'Noto Sans Georgian',sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:4px;}
+    .th-live{font-family:'Noto Sans Georgian',sans-serif;font-size:11px;letter-spacing:2px;color:var(--red);white-space:nowrap;}
+    .th-body{display:grid;grid-template-columns:300px 1fr;gap:30px;align-items:center;}
+    @media (max-width:760px){.th-body{grid-template-columns:1fr;}}
+    .th-ring{position:relative;width:300px;height:300px;margin:0 auto;}
+    .th-ring canvas{position:absolute;inset:0;}
+    .th-photo{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:168px;height:168px;border-radius:50%;overflow:hidden;background:var(--bg);border:3px solid var(--paper);box-shadow:0 0 0 1px var(--border);display:flex;align-items:center;justify-content:center;}
+    .th-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+    .th-initials{font-family:'Noto Serif Georgian',serif;font-weight:900;font-size:60px;color:var(--accent);}
+    .th-center-val{position:absolute;left:50%;bottom:-2px;transform:translateX(-50%);text-align:center;width:100%;}
+    .th-right{align-self:center;}
+    .th-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border);background:var(--paper);}
+    .th-stats .c{padding:14px 18px;border-right:1px solid var(--border);border-bottom:none;}
+    .th-stats .c:last-child{border-right:none;}
+    @media (max-width:760px){
+      .th-stats{grid-template-columns:repeat(2,1fr);}
+      .th-stats .c{border-bottom:1px solid var(--border);border-right:1px solid var(--border);}
+      .th-stats .c:nth-child(2n){border-right:none;}
+      .th-stats .c:nth-child(n+3){border-bottom:none;}
+    }
+    .th-stats .c .l{font-family:'Noto Sans Georgian',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+    .th-stats .c .v{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-weight:700;font-size:24px;letter-spacing:-0.5px;color:var(--ink);}
+    .th-stats .c .v.pos{color:var(--green);}.th-stats .c .v.neg{color:var(--red);}
+    .th-legend{width:100%;border-collapse:collapse;font-family:'Noto Sans Georgian',sans-serif;font-size:11px;margin-top:12px;}
+    .th-legend td{padding:5px 0;border-bottom:1px solid rgba(0,0,0,0.05);}
+    .th-legend tr.clickable-row:hover{background:rgba(22,101,52,0.06);}
+    .th-legend tr:last-child td{border-bottom:none;}
+    .th-legend .sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:7px;vertical-align:middle;}
+    .th-legend .nm{font-family:'Noto Serif Georgian',serif;font-weight:700;}
+    .th-legend .vv{text-align:right;font-family:ui-monospace,monospace;font-weight:700;}
+    .th-legend .pp{text-align:right;color:var(--muted);font-size:10px;padding-left:10px;}
+    /* combined mountain + withdrawn belt (change spec §3 & §6) */
+    .th-mountain{border-top:1px solid var(--border);margin-top:20px;padding-top:16px;}
+    .th-m-label{font-family:'Noto Serif Georgian',serif;font-weight:900;font-size:16px;margin-bottom:2px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;}
+    .th-m-label em{font-weight:400;color:var(--muted);font-size:12px;font-style:italic;}
+    .th-m-wrap{height:220px;position:relative;margin-top:8px;}
+    .th-belt{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border);background:var(--paper);margin-top:18px;}
+    .th-belt .cell{padding:14px 18px;border-right:1px solid var(--border);border-bottom:none;display:block;text-decoration:none;color:inherit;transition:background-color .15s;}
+    .th-belt .cell:hover{background:rgba(0,0,0,0.02);}
+    .th-belt .cell:last-child{border-right:none;}
+    @media (max-width:900px){
+      .th-belt{grid-template-columns:repeat(2,1fr);}
+      .th-belt .cell{border-bottom:1px solid var(--border);}
+      .th-belt .cell:nth-child(2n){border-right:none;}
+      .th-belt .cell:nth-child(n+3){border-bottom:none;}
+    }
+    @media (max-width:560px){
+      .th-belt{grid-template-columns:1fr;}
+      .th-belt .cell{border-right:none;border-bottom:1px solid var(--border);}
+      .th-belt .cell:last-child{border-bottom:none;}
+    }
+    .th-belt .l{font-family:'Noto Sans Georgian',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+    .th-belt .v{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-weight:700;font-size:22px;letter-spacing:-0.5px;color:var(--ink);}
+    .th-belt .n{font-family:'Noto Sans Georgian',sans-serif;font-size:9px;color:var(--muted);margin-top:3px;}
+    
+    /* portfolio dividend goal card (change spec §5) */
+    .div-goal{background:var(--paper);border:1px solid var(--border);border-left:3px solid var(--green,#15803d);padding:16px 20px;margin:10px 0 26px;font-family:'Noto Sans Georgian',sans-serif;}
+    .div-goal .dg-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px;}
+    .div-goal .dg-title{font-family:'Noto Serif Georgian',serif;font-weight:900;font-size:17px;color:var(--ink);}
+    .div-goal .dg-title em{font-weight:400;font-style:italic;color:var(--muted);font-size:13px;margin-left:6px;}
+    .div-goal .dg-sub{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);}
+    .div-goal .dg-target{font-family:ui-monospace,monospace;font-weight:700;font-size:26px;color:var(--green,#15803d);margin:10px 0 2px;}
+    .div-goal .dg-target span{font-size:12px;color:var(--muted);font-weight:400;}
+    .div-goal .dg-bar{height:9px;background:rgba(0,0,0,.06);border-radius:5px;overflow:hidden;margin:8px 0 6px;}
+    .div-goal .dg-fill{height:100%;background:var(--green,#15803d);border-radius:5px;transition:width .4s;}
+    .div-goal .dg-foot{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-family:ui-monospace,monospace;}
+    .div-goal .dg-foot .got{color:var(--ink);font-weight:700;}
+    .div-goal .dg-note{font-size:11px;color:var(--muted);margin-top:9px;line-height:1.55;}
+    /* archive written journey summary (change spec §4) */
+    .tp-journey{background:var(--paper);border:1px solid var(--border);border-left:3px solid var(--red,#b91c1c);padding:18px 22px;margin:6px 0 20px;font-family:'Noto Sans Georgian',sans-serif;}
+    .tp-journey h4{font-family:'Noto Serif Georgian',serif;font-weight:900;font-size:19px;margin:0 0 4px;color:var(--ink);}
+    .tp-journey .jr-sub{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+    .tp-journey p{font-size:12.5px;line-height:1.7;color:var(--ink);margin:0 0 10px;}
+    .tp-journey p.muted{color:var(--muted);}
+    .tp-journey .jr-h{font-family:'Noto Sans Georgian',sans-serif;font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);margin:14px 0 5px;}
+    .tp-journey ul{margin:0 0 6px;padding-left:18px;}
+    .tp-journey li{font-size:12px;line-height:1.6;color:var(--muted);margin-bottom:3px;}
+    .tp-journey li strong{color:var(--ink);}
+
+    /* --- ranked portfolio books --- */
+    .rank-tools{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:18px 0 18px;}
+    .rank-tools .lbl{font-family:'Noto Sans Georgian',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+    .sort-toggle{display:inline-flex;border:1px solid var(--border);background:var(--paper);}
+    .sort-toggle button{font-family:'Noto Sans Georgian',sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:7px 14px;background:none;border:none;border-right:1px solid var(--border);cursor:pointer;color:var(--muted);}
+    .sort-toggle button:last-child{border-right:none;}
+    .sort-toggle button.on{background:var(--ink);color:var(--paper);font-weight:700;}
+    .books-carousel-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+    .books-grid-viewport {
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      width: 100%;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .books-grid-viewport::-webkit-scrollbar {
+      display: none;
+    }
+    .books-grid {
+      display: flex;
+      gap: 26px;
+      margin-bottom: 8px;
+      width: 100%;
+    }
+    a.bookcard {
+      flex: 0 0 calc((100% - 52px) / 3);
+      display: block;
+      text-decoration: none;
+      position: relative;
+      transition: transform .15s ease;
+    }
+    @media(max-width:900px){
+      a.bookcard {
+        flex: 0 0 290px;
+      }
+    }
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--paper);
+      border: 2px solid var(--ink);
+      color: var(--ink);
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      box-shadow: 3px 3px 0 rgba(26,26,26,0.15);
+      transition: background 0.15s, transform 0.15s, opacity 0.15s;
+    }
+    .carousel-btn:hover {
+      background: var(--ink);
+      color: var(--paper);
+      transform: translateY(-50%) scale(1.05);
+    }
+    .carousel-btn:active {
+      transform: translateY(-50%) scale(0.95);
+    }
+    .carousel-btn.prev {
+      left: -20px;
+    }
+    .carousel-btn.next {
+      right: -20px;
+    }
+    .carousel-btn.disabled {
+      opacity: 0;
+      pointer-events: none;
+    }
+    @media(max-width:980px) {
+      .carousel-btn.prev { left: -10px; }
+      .carousel-btn.next { right: -10px; }
+    }
+    @media(max-width:600px) {
+      .carousel-btn { display: none !important; }
+    }
+    a.bookcard:hover{transform:translateY(-4px);}
+    .bk{position:relative;border:2px solid #1a1a1a;padding:26px 22px 22px 36px;color:#fffdf7;box-shadow:10px 10px 0 rgba(26,26,26,0.12);min-height:330px;}
+    .bk::before{content:'';position:absolute;left:0;top:0;bottom:0;width:16px;border-right:2px solid #1a1a1a;background:rgba(0,0,0,0.28);}
+    .bk .inner{border:1.5px dashed rgba(255,253,247,0.85);padding:18px 14px;text-align:center;height:100%;}
+    .bk.pos{background:#166534;}.bk.pos::before{background:#0d4023;}
+    .bk.neg{background:#b91c1c;}.bk.neg::before{background:#7f1313;}
+    .bk.closed{background:#4b5563;}.bk.closed::before{background:#2f3742;}
+    .bk .rank-no{position:absolute;top:-13px;right:-13px;width:34px;height:34px;border-radius:50%;background:#fffdf7;color:#1a1a1a;border:2px solid #1a1a1a;font-family:'Noto Serif Georgian',serif;font-weight:900;font-size:15px;display:flex;align-items:center;justify-content:center;box-shadow:3px 3px 0 rgba(26,26,26,0.2);}
+    .bk .b-name{font-family:'Noto Serif Georgian',serif;font-weight:900;font-size:34px;line-height:1;}
+    .bk .b-sub{font-family:'Noto Sans Georgian',sans-serif;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;opacity:0.85;margin-top:7px;}
+    .bk hr{border:none;border-top:1px solid rgba(255,253,247,0.75);margin:13px 22px;}
+    .bk .b-cap{font-family:'Noto Sans Georgian',sans-serif;font-size:8.5px;letter-spacing:2px;text-transform:uppercase;opacity:0.8;}
+    .bk .b-val{font-size:34px;font-weight:900;margin:6px 0 14px;font-variant-numeric:tabular-nums;color:#fffdf7;}
+    .bk .b-row{display:flex;justify-content:space-between;gap:8px;margin-bottom:14px;}
+    .bk .b-row .cell{text-align:center;flex:1;}
+    .bk .b-row .v{font-size:13.5px;font-weight:700;font-family:ui-monospace,monospace;margin-top:4px;}
+    .bk .b-row .v.up{color:#54d38a;}
+    .bk .b-row .v.dn{color:#ff7c7c;}
+    .bk .b-dep{font-family:'Noto Sans Georgian',sans-serif;font-size:11px;color:rgba(255,253,247,0.75);margin-bottom:12px;}
+    .bk .b-open{font-family:'Noto Sans Georgian',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;border:1px solid rgba(255,253,247,0.4);padding:6px 12px;background:rgba(255,253,247,0.06);transition:background .15s,border-color .15s;}
+    .bk:hover .b-open{background:rgba(255,253,247,0.16);border-color:#fffdf7;}
+  </style>
+
+  <section class="total-hero">
+    <div class="th-top">
+      <div>
+        <div class="th-eyebrow">სრული პორტფელი · Total Portfolio</div>
+        <div class="th-person">ლაშა ფხაკაძე <a href="edit.html" class="th-edit no-print" title="რედაქტირება" aria-label="რედაქტირება">&#9998;</a></div>
+        <div class="th-sub">სამი წიგნი · BOG · TBC · GALT · ვისბადენი</div>
+        <div id="me-fees" style="font-family:ui-monospace,monospace;font-size:11px;color:var(--red);margin-top:7px;letter-spacing:0.5px;"></div>
+      </div>
+      <div class="th-live"><span id="total-live-stamp">● იტვირთება…</span></div>
+    </div>
+    <div class="th-body">
+      <div class="th-ring">
+        <canvas id="total-donut"></canvas>
+        <div class="th-photo">
+          <img id="me-photo" src="images/lasha.jpg" alt="ლაშა ფხაკაძე"
+               onerror="this.style.display='none';document.getElementById('me-initials').style.display='block';">
+          <span id="me-initials" class="th-initials" style="display:none;">ლ</span>
+        </div>
+      </div>
+      <div class="th-right">
+        <div class="th-stats" id="total-stats"></div>
+        <table class="th-legend" id="total-legend"></table>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- RANKED PORTFOLIO BOOKS (Moved from Market page)             -->
+    <!-- ============================================================ -->
+    <div class="section-head">პორტფელების რეიტინგი</div>
+
+    <div class="rank-tools">
+      <span class="lbl">სამი წიგნი — ცოცხალი ფასებით, საუკეთესოდან</span>
+      <span class="live-note" id="books-live-stamp">● იტვირთება…</span>
+      <div class="sort-toggle" role="tablist">
+        <button id="sort-total" class="on" onclick="setSort('total')">ჯამური %</button>
+        <button id="sort-day" onclick="setSort('day')">დღიური %</button>
+      </div>
+    </div>
+
+    <div class="books-carousel-wrapper">
+      <button id="books-carousel-prev" class="carousel-btn prev disabled" onclick="slideBooks('prev')" aria-label="Previous book">❮</button>
+      <div class="books-grid-viewport" id="books-grid-viewport">
+        <div class="books-grid" id="books-grid"></div>
+      </div>
+      <button id="books-carousel-next" class="carousel-btn next" onclick="slideBooks('next')" aria-label="Next book">❯</button>
+    </div>
+
+    <!-- Combined "The Mountain" — total value vs total deposited (all books) · §3 -->
+    <div class="th-mountain">
+      <div class="th-m-label">პორტფელის ზრდა <em>Portfolio Growth · ღირებულება vs ჩარიცხული · ყველა წიგნი</em></div>
+      <div class="th-m-wrap"><canvas id="total-mountain"></canvas></div>
+    </div>
+
+    <!-- Fees & Dividends belt -->
+    <div class="th-belt">
+      <div class="cell" id="total-platform-fees"></div>
+      <div class="cell" id="total-dividends-received"></div>
+      <div class="cell" id="total-dividends-projected"></div>
+      <div class="cell" id="total-commissions-belt"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- BOOK ONE · DOGMA (BOG)                                       -->
+  <!-- ============================================================ -->
+
+  <div class="book-header" id="book-bog">
+    <div class="book-title">
+      <span><span class="book-dot"></span>წიგნი პირველი · <em style="font-weight:400;font-style:italic;color:var(--muted)">Dogma</em></span>
+    </div>
+    <div class="book-meta">
+      <div class="book-sub">BOG · გრძელვადიანი</div>
+      <div id="bog-open-count" style="font-size:10px;margin-top:2px;color:var(--red);letter-spacing:1px;"></div>
+    </div>
+  </div>
+
+  <!-- Stat boxes -->
+  <div id="bog-banner" class="stat-row"></div>
+
+  <!-- Allocation + Mountain side by side (moved up — comes right after stat banner) -->
+  <div class="alloc-mountain">
+    <div class="alloc-panel">
+      <div class="panel-label">გადანაწილება <em>The Allocation</em></div>
+      <span class="panel-sublabel">BOG — ინვესტიციის წილი</span>
+      <div class="alloc-chart-wrap"><canvas id="bog-donut"></canvas></div>
+      <table class="alloc-legend" id="bog-alloc-legend"></table>
+    </div>
+    <div class="mountain-panel">
+      <div class="panel-label">მთა <em>The Mountain</em></div>
+      <span class="panel-sublabel">BOG · ISS 01 → 07 · USD · ღირებულება vs ჩარიცხული</span>
+      <div class="mountain-chart-wrap"><canvas id="bog-mountain-top"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Open Holdings moved to the "აქტივების დეტალები" tab (grouped by book). -->
+  <div class="live-stamp"><span id="bog-live-stamp">● იტვირთება…</span></div>
+
+  <!-- Transactions -->
+  <div class="tx-header">
+    <h3 class="tx-title">BOG · ბოლო ტრანზაქციები</h3>
+  </div>
+  <div id="bog-tx" class="tx-list"></div>
+  <div id="bog-pager" class="pagination"></div>
+
+  <!-- ============================================================ -->
+  <!-- BOOK TWO · TBC (Active)                                      -->
+  <!-- ============================================================ -->
+
+  <hr class="book-divider">
+
+  <div class="book-header" id="book-tbc">
+    <div class="book-title">
+      <span><span class="book-dot" style="background:var(--ink)"></span>წიგნი მეორე · <em style="font-weight:400;font-style:italic;color:var(--muted)">Income</em></span>
+    </div>
+    <div class="book-meta">
+      <div class="book-sub">TBC · დივიდენდი · შემოსავალი</div>
+      <div id="tbc-open-count" style="font-size:10px;margin-top:2px;color:var(--red);letter-spacing:1px;"></div>
+    </div>
+  </div>
+
+  <!-- Stat boxes -->
+  <div id="tbc-banner" class="stat-row"></div>
+
+  <!-- Allocation + Mountain side by side (moved up — comes right after stat banner) -->
+  <div class="alloc-mountain">
+    <div class="alloc-panel">
+      <div class="panel-label">გადანაწილება <em>The Allocation</em></div>
+      <span class="panel-sublabel">TBC — ინვესტიციის წილი</span>
+      <div class="alloc-chart-wrap"><canvas id="tbc-donut"></canvas></div>
+      <table class="alloc-legend" id="tbc-alloc-legend"></table>
+    </div>
+    <div class="mountain-panel">
+      <div class="panel-label">მთა <em>The Mountain</em></div>
+      <span class="panel-sublabel">TBC · ISS 03 → 06 · USD · ღირებულება vs ჩარიცხული</span>
+      <div class="mountain-chart-wrap"><canvas id="tbc-mountain-top"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Open Holdings moved to the "აქტივების დეტალები" tab (grouped by book). -->
+  <div class="live-stamp"><span id="tbc-live-stamp">● იტვირთება…</span></div>
+
+  <!-- Transactions -->
+  <div class="tx-header">
+    <h3 class="tx-title">TBC · ბოლო ტრანზაქციები</h3>
+  </div>
+  <div id="tbc-tx" class="tx-list"></div>
+  <div id="tbc-pager" class="pagination"></div>
+
+  <!-- ============================================================ -->
+  <!-- BOOK THREE · GALT (Margin / Leverage)                        -->
+  <!-- ============================================================ -->
+
+  <hr class="book-divider">
+
+  <div class="book-header" id="book-galt">
+    <div class="book-title">
+      <span><span class="book-dot" style="background:#8b6914"></span>წიგნი მესამე · <em style="font-weight:400;font-style:italic;color:var(--muted)">Leverage</em></span>
+    </div>
+    <div class="book-meta">
+      <div class="book-sub">GALT · Galt &amp; Taggart · 2.5× ბერკეტი</div>
+      <div style="font-size:10px;margin-top:2px;color:#8b6914;letter-spacing:1px;">დახურულია უვადოდ · CLOSED</div>
+    </div>
+  </div>
+
+  <!-- GALT allocation donut (closed book · $0) — same style as BOG/TBC -->
+  <div class="alloc-mountain" style="grid-template-columns:1fr;">
+    <div class="alloc-panel" style="border-right:none;">
+      <div class="panel-label">გადანაწილება <em>The Allocation</em></div>
+      <span class="panel-sublabel">GALT — დახურული · CLOSED</span>
+      <div class="alloc-chart-wrap" style="max-width:320px;margin:0 auto;position:relative;">
+        <canvas id="galt-donut"></canvas>
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;">
+          <div style="font-family:ui-monospace,monospace;font-weight:700;font-size:20px;color:#8b6914;">$0.00</div>
+          <div style="font-family:'Noto Sans Georgian',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);">დახურული</div>
+        </div>
+      </div>
+      <table class="alloc-legend" id="galt-alloc-legend" style="max-width:320px;margin:8px auto 0;"></table>
+    </div>
+  </div>
+
+    <div id="galt-stats" class="stat-row"></div>
+  <div id="galt-note" class="rules-box" style="border-left-color:#8b6914;"></div>
+  <div class="tx-header"><h3 class="tx-title">GALT · ტრანზაქციების ისტორია</h3></div>
+  <div id="galt-trades" class="rules-box" style="border-left-color:#8b6914;"></div>
+  <div class="tx-header"><h3 class="tx-title">შიდა გადატანები · Internal Transfers</h3></div>
+  <div id="me-transfers" class="rules-box" style="border-left-color:#8b6914;"></div>
+
+  <div class="tx-header"><h3 class="tx-title">📄 Trading Paper — ამობეჭდვა / PDF</h3></div>
+  <div class="rules-box no-print" style="text-align:center;border-left-color:#8b6914;">
+    <p style="font-size:12px;color:var(--muted);margin-bottom:10px;">დააჭირე ღილაკს და შეინახე ეს გვერდი PDF-ად ან ამობეჭდე.</p>
+    <button onclick="window.print()" style="padding:10px 26px;background:#1a1a1a;color:#fff;border:none;font-size:13px;letter-spacing:2px;cursor:pointer;text-transform:uppercase;font-family:'Noto Sans Georgian',sans-serif;">🖨 ამობეჭდვა / Save as PDF</button>
+    <div style="font-size:10.5px;color:var(--muted);margin-top:8px;">Save the file into the /issues/ folder and add it to issues.json to archive it.</div>
+  </div>
+
+  </div><!-- /#tab-total -->
+
+  <!-- ============================================================ -->
+  <!-- TAB 2 · აქტივების დეტალები · consolidated all-assets table    -->
+  <!-- ============================================================ -->
+  <div id="tab-assets" class="tp-tab-pane">
+    <div class="assets-head">
+      <div class="ah-t">აქტივების დეტალები <em>Assets · by book</em></div>
+      <div class="th-live"><span id="assets-live-stamp">● იტვირთება…</span></div>
+    </div>
+    <p class="assets-sub">პოზიციები დაჯგუფებულია წიგნების მიხედვით — BOG · TBC · GALT. დააჭირე ტიკერს და გაიხსნება სრული დეტალები. დღიური ცვლილება ცოცხალია.</p>
+    <div id="assets-groups"></div>
+    <p class="assets-note">დღიური ცვლილება = მიმდინარე ფასი vs წინა დახურვა. ფასები ცოცხალია (BOG · TBC), ~20 წამში ერთხელ ახლდება. GALT დახურულია.</p>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- TAB 3 · ტრანზაქციების ისტორია · consolidated transaction history   -->
+  <!-- ============================================================ -->
+  <div id="tab-history" class="tp-tab-pane">
+    <style>
+      .filter-panel {
+        background: var(--paper);
+        border: 1px solid var(--border);
+        border-top: 2px solid var(--rule);
+        padding: 16px;
+        margin: 14px 0 24px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: flex-end;
+        font-family: 'Noto Sans Georgian', sans-serif;
+        font-size: 12px;
+      }
+      .filter-field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        flex: 1;
+        min-width: 140px;
+      }
+      .filter-field.search {
+        flex: 2;
+        min-width: 200px;
+      }
+      .filter-field label {
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 9.5px;
+        color: var(--muted);
+        letter-spacing: 1px;
+      }
+      .filter-field input, .filter-field select {
+        padding: 8px 12px;
+        border: 1px solid var(--border);
+        background: var(--paper);
+        color: var(--ink);
+        font-family: inherit;
+        font-size: 13px;
+        outline: none;
+        transition: border-color 0.15s;
+        height: 36px;
+      }
+      .filter-field input:focus, .filter-field select:focus {
+        border-color: var(--red);
+      }
+      .tx-hist {
+        display: grid;
+        grid-template-columns: 110px 90px 110px 1fr;
+        align-items: center;
+        gap: 16px;
+        padding: 12px 16px;
+        background: var(--paper);
+        border-bottom: 1px solid var(--border);
+        font-family: 'Noto Sans Georgian', sans-serif;
+        font-size: 13.5px;
+      }
+      .tx-hist:first-child { border-top: 1px solid var(--border); }
+      .tx-hist:hover { background: rgba(0,0,0,0.02); }
+      @media (max-width: 760px) {
+        .tx-hist { grid-template-columns: 1fr; gap: 6px; }
+      }
+    </style>
+    
+    <div class="assets-head">
+      <div class="ah-t">ტრანზაქციების ისტორია <em>Transaction History</em></div>
+    </div>
+    
+    <!-- Filter Panel -->
+    <div class="filter-panel">
+      <div class="filter-field search">
+        <label for="hist-search">ძებნა (ტიკერი/კომენტარი)</label>
+        <input type="text" id="hist-search" placeholder="მაგ. VOO, deposit, MSTR...">
+      </div>
+      
+      <div class="filter-field">
+        <label for="hist-filter-book">წიგნი / ბროკერი</label>
+        <select id="hist-filter-book">
+          <option value="all">ყველა წიგნი</option>
+          <option value="bog">BOG · Dogma</option>
+          <option value="tbc">TBC · Income</option>
+          <option value="galt">GALT · Leverage</option>
+        </select>
+      </div>
+
+      <div class="filter-field">
+        <label for="hist-filter-type">ოპერაცია</label>
+        <select id="hist-filter-type">
+          <option value="all">ყველა ოპერაცია</option>
+          <option value="buy">BUY (ყიდვა)</option>
+          <option value="sell">SELL (გაყიდვა)</option>
+          <option value="deposit">DEPOSIT (დეპოზიტი)</option>
+          <option value="withdraw">WITHDRAW (გატანა)</option>
+          <option value="dividend">DIVIDEND (დივიდენდი)</option>
+          <option value="fee">FEE (საკომისიო)</option>
+        </select>
+      </div>
+
+      <div class="filter-field">
+        <label for="hist-date-start">თარიღიდან</label>
+        <input type="date" id="hist-date-start">
+      </div>
+
+      <div class="filter-field">
+        <label for="hist-date-end">თარიღამდე</label>
+        <input type="date" id="hist-date-end">
+      </div>
+      
+      <div>
+        <button id="hist-reset" style="padding: 8px 16px; background: none; border: 1px solid var(--border); color: var(--muted); cursor: pointer; font-family: inherit; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; transition: all 0.15s; height: 36px;">გასუფთავება</button>
+      </div>
+    </div>
+
+    <!-- Live stats summary for search/filtered subset -->
+    <div id="hist-summary"></div>
+
+    <!-- Filtered transaction list -->
+    <div id="hist-tx-list" class="tx-list"></div>
+    
+    <!-- Filtered list pagination -->
+    <div id="hist-pager" class="pagination" style="margin-bottom: 24px;"></div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- TAB 4 · Issues (PDF Archive)                                 -->
+  <!-- ============================================================ -->
+  <div id="tab-issues" class="tp-tab-pane">
+    <div class="assets-head">
+      <div class="ah-t">Issues Archive <em>PDF გამოცემების არქივი</em></div>
+    </div>
+    <p class="assets-sub">The Trading Paper-ის გამოცემების არქივი. შეგიძლიათ ნახოთ ან ჩამოტვირთოთ PDF ფაილები.</p>
+
+    <div id="issues-list" style="margin-bottom: 24px;"></div>
+
+    <div class="rules-box no-print" style="text-align:center; border-left-color:#8b6914; margin-top:20px;">
+      <p style="font-size:12px; color:var(--muted); margin-bottom:10px;">დააჭირე ღილაკს და შეინახე ეს გვერდი PDF-ად ან ამობეჭდე.</p>
+      <button onclick="window.print()" style="padding:10px 26px; background:#1a1a1a; color:#fff; border:none; font-size:13px; letter-spacing:2px; cursor:pointer; text-transform:uppercase; font-family:'Noto Sans Georgian',sans-serif;">🖨 ამობეჭდვა / Save as PDF</button>
+      <div style="font-size:10.5px; color:var(--muted); margin-top:8px;">Save the file into the /issues/ folder and add it to issues.json to archive it.</div>
+    </div>
+  </div><!-- /#tab-issues -->
+
+</main>
+
+<footer>
+  © 2026 The Trading Paper · ლაშა ფხაკაძე · ვისბადენი<br>
+  ეს არ არის ფინანსური რჩევა
+</footer>
+
+<script>document.write('<scr'+'ipt src="/portfolio-data.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
+<script>document.write('<scr'+'ipt src="js/portfolios.data.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
+<script>document.write('<scr'+'ipt src="js/portfolios.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
+<script>try{
+var D=window.MEPORTF||{};
+if(typeof portfolios!=='undefined'){
+ if(portfolios.bog&&D.bog){portfolios.bog.cash=D.bog.cashAdded||0;if(D.bog.countedAsDeposit){portfolios.bog.transactions=[{date:D.lastUpdated||'',type:'deposit',amount:D.bog.cashAdded||0,note:'transfer in'}].concat(portfolios.bog.transactions||[]);}}
+}
+function M(n){return (n<0?'−$':'$')+Math.abs(+n||0).toFixed(2);}
+var g=D.galt||{};
+var st=document.getElementById('galt-stats');
+if(st){
+ // GALT rendered in the same stat-banner format as BOG/TBC (closed book).
+ var gpct=(+g.deposit>0)?((+g.net||0)/(+g.deposit)*100):0;
+ var gfeeCount=(g.trades||[]).filter(function(t){return t.fee&&t.fee!=='—';}).length;
+ st.innerHTML='<div class="stat-banner">'
+  +'<div class="stat-banner-head"><span class="stat-name">GALT · GALT &amp; TAGGART</span><span class="stat-tag">2.5× ბერკეტი · '+(g.statusShort||'დახურულია')+'</span></div>'
+  +'<div class="stat-grid with-div">'
+  +'<div class="stat-cell"><div class="stat-label">სრული ჩარიცხული</div><div class="stat-val">'+M(g.deposit)+'</div></div>'
+  +'<div class="stat-cell"><div class="stat-label">პორტფელის ღირებულება</div><div class="stat-val">$0.00</div></div>'
+  +'<div class="stat-cell"><div class="stat-label">წმინდა P/L</div><div class="stat-val neg">'+M(g.net)+'</div></div>'
+  +'<div class="stat-cell"><div class="stat-label">უკუგება</div><div class="stat-val neg">'+(gpct<0?'−':'+')+Math.abs(gpct).toFixed(2)+'%</div></div>'
+  +'<div class="stat-cell"><div class="stat-label">გატანილი → BOG</div><div class="stat-val pos">'+M(g.withdrawnToBOG)+'</div></div>'
+  +'<div class="stat-cell" style="grid-column:-2/-1;border-left:1px solid var(--border,#d9d4c8);border-top:1px solid var(--border,#d9d4c8);padding-top:10px;"><div class="stat-label">გადახდილი საკომისიო <a href="commissions.html" class="no-print" style="text-decoration:none;color:#b91c1c;font-weight:800" title="საკომისიოების ჟურნალი">↗</a></div><div class="stat-val neg">−$'+(+g.fees||0).toFixed(2)+'<span class="stat-sub">'+gfeeCount+' საკომისიო · Commissions</span></div></div>'
+  +'</div>'
+  +'<div class="stat-foot"><span>თვალყურის დევნება დაიწყო: 29 მაი 2026</span><span style="letter-spacing:1px;">დახურულია · CLOSED</span></div>'
+  +'</div>';}
+var nt=document.getElementById('galt-note');
+if(nt){nt.innerHTML='<div class="rules-title">Galt &amp; Taggart — '+(g.statusShort||'')+'</div><ul><li>'+(g.statusNote||'')+'</li><li><strong>დეპოზიტი:</strong> '+M(g.deposit)+' · <strong>საკომისიო:</strong> $'+(+g.fees||0).toFixed(2)+' · <strong>გატანილი:</strong> '+M(g.withdrawnToBOG)+'</li></ul>';}
+var hd='<tr style="text-align:left;color:var(--muted);font-size:9px;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--border);"><th style="padding:6px 4px;">თარიღი</th><th>ოპერაცია</th><th style="text-align:right;">ფასი</th><th style="text-align:right;">საკომისიო</th></tr>';
+var tr=document.getElementById('galt-trades');
+if(tr&&g.trades){var rows=g.trades.map(function(t){return '<tr><td style="padding:5px 4px;">'+t.date+'</td><td>'+t.op+'</td><td style="text-align:right;">'+(t.price||'—')+'</td><td style="text-align:right;">'+(t.fee||'—')+'</td></tr>';}).join('');tr.innerHTML='<table style="width:100%;border-collapse:collapse;font-family:ui-monospace,monospace;font-size:11.5px;">'+hd+rows+'<tr style="border-top:1px solid var(--border);font-weight:700;"><td style="padding:6px 4px;" colspan="3">ჯამური საკომისიო</td><td style="text-align:right;color:var(--red);">$'+(+g.fees||0).toFixed(2)+'</td></tr></table>';}
+var tf=document.getElementById('me-transfers');
+if(tf&&D.transfers){var th='<tr style="text-align:left;color:var(--muted);font-size:9px;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--border);"><th style="padding:6px 4px;">თარიღი</th><th>საიდან → სად</th><th>ტიპი</th><th style="text-align:right;">თანხა</th></tr>';var rs=D.transfers.map(function(x){return '<tr><td style="padding:5px 4px;">'+x.date+'</td><td>'+x.from+' → '+x.to+'</td><td>'+(x.type||'')+'</td><td style="text-align:right;">'+M(x.amount)+'</td></tr>';}).join('');tf.innerHTML='<table style="width:100%;border-collapse:collapse;font-family:ui-monospace,monospace;font-size:11.5px;">'+th+rs+'</table><div style="font-size:10px;color:var(--muted);margin-top:8px;">შიდა გადატანა მთლიან ჩარიცხულ თანხას არ ცვლის.</div>';}
+var fe=document.getElementById('me-fees');if(fe){var bd=(D.feesByBook||[]).map(function(x){return x.book+': $'+(+x.amount).toFixed(2)+(x.note?' ('+x.note+')':'');}).join('<br>');if(D.marginFinancingEst){bd+='<br>მარგინი/შენახვა (est.): ~$'+(+D.marginFinancingEst).toFixed(2);}fe.innerHTML='<span id="mfl" style="cursor:pointer;border-bottom:1px dotted var(--red);">გადახდილი საკომისიო/გადასახადი: $'+((+D.feesPaid||0).toFixed(2))+' &#9662;</span><div id="mfd" style="display:none;margin-top:6px;color:var(--muted);font-size:10px;line-height:1.7;">'+bd+'</div>';var lbl=document.getElementById('mfl');if(lbl){lbl.addEventListener('click',function(){var d=document.getElementById('mfd');d.style.display=d.style.display==='none'?'block':'none';});}}
+}catch(e){console.warn('meportf',e);}</script>
+<script>
+  // ===== Date =====
+  const months = ['იანვარი','თებერვალი','მარტი','აპრილი','მაისი','ივნისი','ივლისი','აგვისტო','სექტემბერი','ოქტომბერი','ნოემბერი','დეკემბერი'];
+  const d = new Date();
+  const dateEl = document.getElementById('today-date');
+  if (dateEl) dateEl.textContent = `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+
+  // ===== Initial static renders (cached values, repainted by live prices below) =====
+  renderStatBanner('bog-banner', 'bog');
+  renderDonut('bog-donut', 'bog');
+  renderPaginated('bog-tx', 'bog-pager', 'bog', 4);
+
+  renderStatBanner('tbc-banner', 'tbc');
+  renderDonut('tbc-donut', 'tbc');
+  renderPaginated('tbc-tx', 'tbc-pager', 'tbc', 4);
+
+  // GALT is closed — its section is rendered by the MEPORTF script above
+  // (galt-stats / galt-note / galt-trades), so no live book render here.
+
+  // ===== Holdings summary line =====
+  function renderHoldingsSummary(summaryId, openCountId, key) {
+    const p = portfolios[key];
+    if (!p) return;
+    const h = p.holdings;
+    const totalInv = h.reduce((s,x) => s + x.invested, 0);
+    const totalVal = h.reduce((s,x) => s + x.value, 0);
+    const totalUnreal = totalVal - totalInv;
+    const unrealPct = totalInv > 0 ? (totalUnreal / totalInv * 100) : 0;
+    const pnlCls = totalUnreal >= 0 ? 'pos' : 'neg';
+    const sign = totalUnreal >= 0 ? '+' : '−';
+
+    const el = document.getElementById(summaryId);
+    if (el) {
+      el.innerHTML = `
+        <span>ინვ: $${totalInv.toFixed(2)}</span>
+        <span>ღირ: $${totalVal.toFixed(2)}</span>
+        <span class="${pnlCls}">${sign}$${Math.abs(totalUnreal).toFixed(2)} (${sign}${Math.abs(unrealPct).toFixed(2)}%)</span>
+      `;
+    }
+    const oc = document.getElementById(openCountId);
+    if (oc) oc.textContent = `${h.length} OPEN · CASH $${(p.cash||0).toFixed(2)}`;
+  }
+  renderHoldingsSummary('bog-holdings-summary', 'bog-open-count', 'bog');
+  renderHoldingsSummary('tbc-holdings-summary', 'tbc-open-count', 'tbc');
+
+  // ===== Allocation legend (PDF-style table) =====
+  function renderAllocLegend(tableId, key) {
+    const p = portfolios[key];
+    if (!p) return;
+    const tbl = document.getElementById(tableId);
+    if (!tbl) return;
+    const total = p.holdings.reduce((s,x) => s + x.value, 0) + (p.cash || 0);
+    let html = '';
+    for (const h of p.holdings) {
+      const pct = total > 0 ? (h.value / total * 100) : 0;
+      html += `<tr>
+        <td><span class="al-swatch" style="background:${h.color}"></span><span class="al-name">${h.ticker}</span></td>
+        <td class="al-val">$${h.value.toFixed(2)}</td>
+        <td class="al-pct">${pct.toFixed(1)}%</td>
+      </tr>`;
+    }
+    if (p.cash > 0) {
+      const pct = total > 0 ? (p.cash / total * 100) : 0;
+      html += `<tr>
+        <td><span class="al-swatch" style="background:#9ca3af"></span><span class="al-name">CASH</span></td>
+        <td class="al-val">$${p.cash.toFixed(2)}</td>
+        <td class="al-pct">${pct.toFixed(1)}%</td>
+      </tr>`;
+    }
+    tbl.innerHTML = html;
+  }
+  renderAllocLegend('bog-alloc-legend', 'bog');
+  renderAllocLegend('tbc-alloc-legend', 'tbc');
+
+  // ===== Mountain chart (value vs deposited) =====
+  // Primary source: data/history.json (daily snapshots committed by GitHub Action).
+  // Fallback: hardcoded per-issue series below (used if history.json missing/unreachable).
+  const mountainSeries = {
+    bog: {
+      labels: ['ISS 01', 'ISS 02', 'ISS 03', 'ISS 04', 'ISS 05', 'ISS 06', 'ISS 07', 'ISS 08'],
+      deposited: [868.26, 907.76, 928.26, 948.76, 948.76, 948.76, 1133.76, 1186.26],
+      value:     [907.13, 945.20, 1104.15, 1138.20, 1162.32, 1202.62, 1387.12, 1346.26],
+    },
+    tbc: {
+      labels: ['ISS 03', 'ISS 04', 'ISS 05', 'ISS 06', 'ISS 08'],
+      deposited: [268.75, 380.36, 380.36, 380.36, 380.36],
+      value:     [277.05, 339.78, 334.69, 315.73, 233.94],
+    },
+    galt: {
+      labels: ['ISS 07', 'ISS 08', 'ISS 09', 'ISS 10'],
+      deposited: [290, 290, 290, 290],
+      value:     [290, 313.22, 318.40, 354.25],
+    },
+  };
+
+  async function buildMountainSeries(key) {
+    try {
+      const hist = (typeof loadHistory === 'function') ? await loadHistory() : null;
+      if (hist && Array.isArray(hist)) {
+        const pts = hist.filter(e => e.books && e.books[key]);
+        if (pts.length >= 2) {
+          return {
+            labels:    pts.map(e => e.label || e.date.slice(5).replace('-', '/')),
+            deposited: pts.map(e => e.books[key].deposited),
+            value:     pts.map(e => e.books[key].value),
+          };
+        }
+      }
+    } catch (e) { /* fall back below */ }
+    return mountainSeries[key];
+  }
+
+  async function renderMountain(canvasId, key) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas || typeof Chart === 'undefined') return;
+    const s = await buildMountainSeries(key);
+    if (!s) return;
+    const existing = Chart.getChart(canvas);
+    if (existing) existing.destroy();
+    new Chart(canvas, {
+      type: 'line',
+      data: {
+        labels: s.labels,
+        datasets: [
+          {
+            label: 'ღირებულება',
+            data: s.value,
+            borderColor: key === 'bog' ? '#b91c1c' : '#1a1a1a',
+            backgroundColor: key === 'bog' ? 'rgba(185,28,28,0.12)' : 'rgba(26,26,26,0.10)',
+            fill: true,
+            tension: 0.25,
+            borderWidth: 2,
+            pointRadius: 4,
+            pointBackgroundColor: key === 'bog' ? '#b91c1c' : '#1a1a1a',
+          },
+          {
+            label: 'ჩარიცხული',
+            data: s.deposited,
+            borderColor: '#6b6b6b',
+            backgroundColor: 'transparent',
+            borderDash: [5, 4],
+            borderWidth: 1.5,
+            pointRadius: 3,
+            pointBackgroundColor: '#6b6b6b',
+            fill: false,
+            tension: 0.1,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { boxWidth: 14, font: { family: "'Noto Sans Georgian', sans-serif", size: 11 } } },
+          tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: $${ctx.parsed.y.toFixed(2)}` } },
+        },
+        scales: {
+          y: { beginAtZero: false, ticks: { callback: v => '$' + v, font: { size: 10 } }, grid: { color: 'rgba(0,0,0,0.05)' } },
+          x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+        },
+      },
+    });
+  }
+  renderMountain('bog-mountain-top', 'bog');
+  renderMountain('tbc-mountain-top', 'tbc');
+
+  // GALT is closed — muted $0 allocation ring + single legend row (same donut style).
+  (function(){
+    var cv = document.getElementById('galt-donut');
+    if (cv && typeof Chart !== 'undefined') {
+      var ex = Chart.getChart(cv); if (ex) ex.destroy();
+      new Chart(cv, { type:'doughnut',
+        data:{ labels:['დახურული'], datasets:[{ data:[1], backgroundColor:['#d9d4c8'], borderWidth:2, borderColor:'#fffdf7' }] },
+        options:{ responsive:true, maintainAspectRatio:false, cutout:'62%',
+          plugins:{ legend:{display:false}, tooltip:{enabled:false} } } });
+    }
+    var lg = document.getElementById('galt-alloc-legend');
+    if (lg) lg.innerHTML = '<tr><td><span class="al-swatch" style="background:#d9d4c8"></span><span class="al-name">დახურული</span></td><td class="al-val">$0.00</td><td class="al-pct">100%</td></tr>';
+  })();
+
+  // ===== COMBINED "The Mountain" — all books together (change spec §3) =====
+  // Total portfolio value vs total deposited, summed across BOG + TBC + GALT
+  // per historical snapshot (data/history.json). Falls back to a two-point
+  // start→now series from the live aggregate if history is unavailable.
+  async function renderTotalMountain() {
+    const canvas = document.getElementById('total-mountain');
+    if (!canvas || typeof Chart === 'undefined') return;
+    let labels = [], dep = [], val = [];
+    try {
+      const hist = (typeof loadHistory === 'function') ? await loadHistory() : null;
+      if (hist && Array.isArray(hist) && hist.length) {
+        hist.forEach(e => {
+          if (!e.books) return;
+          let d = 0, v = 0, has = false;
+          ['bog', 'tbc', 'galt'].forEach(k => {
+            if (e.books[k]) { has = true; d += (+e.books[k].deposited || 0); v += (+e.books[k].value || 0); }
+          });
+          if (has) {
+            labels.push(e.label || (e.date ? e.date.slice(5).replace('-', '/') : ''));
+            dep.push(+d.toFixed(2)); val.push(+v.toFixed(2));
+          }
+        });
+      }
+    } catch (e) { /* fall through to fallback */ }
+    if (labels.length < 2) {
+      let d = 0, v = 0;
+      ['bog', 'tbc', 'galt'].forEach(k => { const p = portfolios[k]; if (p) { const a = aggregate(p); d += a.deposits; v += a.currentValue; } });
+      labels = ['დასაწყისი', 'ახლა']; dep = [d, d]; val = [d, v];
+    }
+    const existing = Chart.getChart(canvas);
+    if (existing) existing.destroy();
+    new Chart(canvas, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [
+          { label: 'მთლიანი ღირებულება', data: val, borderColor: '#b91c1c', backgroundColor: 'rgba(185,28,28,0.12)', fill: true, tension: 0.25, borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#b91c1c' },
+          { label: 'სრული ჩარიცხული', data: dep, borderColor: '#6b6b6b', backgroundColor: 'transparent', borderDash: [5, 4], borderWidth: 1.5, pointRadius: 2, pointBackgroundColor: '#6b6b6b', fill: false, tension: 0.1 },
+        ],
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { boxWidth: 14, font: { family: "'Noto Sans Georgian', sans-serif", size: 11 } } },
+          tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: $${ctx.parsed.y.toFixed(2)}` } },
+        },
+        scales: {
+          y: { beginAtZero: false, ticks: { callback: v => '$' + v, font: { size: 10 } }, grid: { color: 'rgba(0,0,0,0.05)' } },
+          x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+        },
+      },
+    });
+  }
+
+  // ===== Live price refresh — repaint stat banner, holdings, donut, legend =====
+  async function refreshAll(key) {
+    try {
+      const updated = await refreshLivePrices(key);
+      renderStatBanner(`${key}-banner`, key);
+      renderHoldingsCards(`${key}-hcards`, key);
+      renderHoldingsSummary(`${key}-holdings-summary`, `${key}-open-count`, key);
+      renderAllocLegend(`${key}-alloc-legend`, key);
+      const c = document.getElementById(`${key}-donut`);
+      if (c && typeof Chart !== 'undefined') {
+        const existing = Chart.getChart(c);
+        if (existing) existing.destroy();
+        renderDonut(`${key}-donut`, key);
+      }
+      const stamp = document.getElementById(`${key}-live-stamp`);
+      if (stamp) {
+        const n = new Date();
+        const live = (updated > 0);
+        stamp.textContent = `● ${live ? 'LIVE' : 'ქეშირებული'} · ${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`;
+        stamp.style.color = live ? '' : 'var(--muted)';
+      }
+    } catch (e) {
+      console.warn('refresh failed', key, e);
+      const stamp = document.getElementById(`${key}-live-stamp`);
+      if (stamp) { stamp.textContent = '● ქეშირებული მონაცემი'; stamp.style.color = 'var(--muted)'; }
+    }
+  }
+
+  // ===== TOTAL PORTFOLIO (all three books combined) =====
+  const TOTAL_COLORS = { bog: '#b91c1c', tbc: '#1a1a1a', galt: '#8b6914' };
+  function fmtUSD(n){ const s = Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); return (n<0?'−$':'$')+s; }
+
+  // ----- Total withdrawn from investments (change spec §6) -----
+  // Sum of every 'withdraw' transaction across all books since 09 Dec 2025.
+  // (Internal book-to-book transfers are NOT withdrawals — they don't count.)
+  function renderPlatformFees(){
+    const est = D.marginFinancingEst || 0;
+    const el = document.getElementById('total-platform-fees');
+    if (el) el.innerHTML = '<div class="l">პლატფორმის მომსახურება <a href="service-fee.html" class="no-print" style="color:var(--red);text-decoration:none;font-weight:bold;">↗</a> · Service Fee</div><div class="v" style="color:var(--red)">'+fmtUSD(est)+'</div><div class="n">ბროკერებს ფიქსირებული გადასახადი არ აქვთ · დეტალები ↗</div>';
+  }
+
+  // ----- Portfolio-wide dividend goal + received dividends (change spec §5) -----
+  const DIV_TARGET = 100; // $100 / year — first milestone, whole portfolio
+  function totalDividends(){
+    let got = 0;
+    ['bog','tbc','galt'].forEach(k => {
+      const p = portfolios[k]; if (!p || !p.transactions) return;
+      p.transactions.forEach(t => { if (t.type === 'dividend') got += (+t.amount || 0); });
+    });
+    return got;
+  }
+  function renderDividendGoal(){
+    const got = totalDividends();
+    const recEl = document.getElementById('total-dividends-received');
+    if (recEl) recEl.innerHTML = '<div class="l">სულ მიღებული დივიდენდი <a href="dividends.html" class="no-print" style="color:var(--red);text-decoration:none;font-weight:bold;">↗</a> · Total Dividends</div><div class="v">'+fmtUSD(got)+'</div><div class="n">წმინდა · მიღებული · ისტორია ↗</div>';
+
+    // Calculate sum of projected annual dividends (net) across bog and tbc
+    let totalGross = 0;
+    ['bog','tbc'].forEach(k => {
+      const p = portfolios[k]; if (!p || !p.holdings) return;
+      p.holdings.forEach(h => {
+        if (typeof h.divYield === 'number' && h.divYield > 0) {
+          totalGross += h.value * (h.divYield / 100);
+        }
+      });
+    });
+    const projNet = totalGross * 0.70; // GE 30% withholding tax
+    const projEl = document.getElementById('total-dividends-projected');
+    if (projEl) projEl.innerHTML = '<div class="l">წლიური დივიდენდი (წმინდა) <a href="annual-income.html" class="no-print" style="color:var(--red);text-decoration:none;font-weight:bold;">↗</a> · Annual Income</div><div class="v" style="color:var(--green)">'+fmtUSD(projNet)+'</div><div class="n">სავარაუდო · 30% GE გადასახადის შემდეგ · პოზიციებით ↗</div>';
+
+    // Total commissions paid across BOG, TBC, GALT
+    const commEl = document.getElementById('total-commissions-belt');
+    if (commEl) {
+      const fees = D.feesPaid || 0;
+      const breakdown = (D.feesByBook || []).map(f => f.book + ': ' + fmtUSD(f.amount)).join(' · ');
+      commEl.innerHTML = '<div class="l">ჯამური საკომისიო <a href="commissions.html" class="no-print" style="color:var(--red);text-decoration:none;font-weight:bold;">↗</a> · Total Commissions</div><div class="v" style="color:var(--red)">'+fmtUSD(fees)+'</div><div class="n">' + breakdown + '</div>';
+    }
+  }
+
+  function renderTotal(){
+    const keys = ['bog','tbc','galt'];
+    let dep = 0, val = 0, wd = 0; const parts = [];
+    for (const k of keys){
+      const p = portfolios[k]; if(!p) continue;
+      const a = aggregate(p);
+      dep += a.deposits; val += a.currentValue; wd += (a.withdrawn || 0);
+      parts.push({ k, name: p.name, value: a.currentValue, color: TOTAL_COLORS[k] });
+    }
+    const platformFees = D.marginFinancingEst || 0;
+    const grossDep = dep + platformFees;
+    const netDep = grossDep - wd;
+    // deposits are reduced by withdrawals for net deposited; withdrawn cash counts as realized value in P/L
+    const pl = val - netDep, plp = netDep>0 ? (pl/netDep*100) : 0;
+    const cls = pl>=0 ? 'pos' : 'neg';
+    const stats = document.getElementById('total-stats');
+    if (stats) stats.innerHTML = `
+      <div class="c">
+        <div class="l">სრული ჩარიცხული <a href="history-bog.html" class="no-print" style="color:var(--red);text-decoration:none;font-weight:bold;margin-left:4px;">↗</a></div>
+        <div style="font-size:9.5px;color:var(--muted);margin-bottom:4px;font-family:'Noto Sans Georgian',sans-serif;letter-spacing:0.2px;">ჩარ: <span style="color:#0056b3;font-weight:700;">${fmtUSD(grossDep)}</span> &nbsp;·&nbsp; გატ: <span style="color:#166534;font-weight:700;">${fmtUSD(wd)}</span></div>
+        <div class="v">${fmtUSD(netDep)}</div>
+      </div>
+      <div class="c"><div class="l">მთლიანი პორტფელი</div><div class="v">${fmtUSD(val)}</div></div>
+      <div class="c"><div class="l">წმინდა P/L</div><div class="v ${cls}">${fmtUSD(pl)}</div></div>
+      <div class="c"><div class="l">უკუგება</div><div class="v ${cls}">${pl>=0?'+':'−'}${Math.abs(plp).toFixed(2)}%</div></div>`;
+    const leg = document.getElementById('total-legend');
+    if (leg) {
+      let html = parts.map(x => {
+        const pct = val>0 ? (x.value/val*100) : 0;
+        return `<tr><td><span class="sw" style="background:${x.color}"></span><span class="nm">${x.name}</span></td><td class="vv">${fmtUSD(x.value)}</td><td class="pp">${pct.toFixed(1)}%</td></tr>`;
+      }).join('');
+      let totalGross = 0;
+      ['bog','tbc'].forEach(k => {
+        const p = portfolios[k]; if (!p || !p.holdings) return;
+        p.holdings.forEach(h => {
+          if (typeof h.divYield === 'number' && h.divYield > 0) {
+            totalGross += h.value * (h.divYield / 100);
+          }
+        });
+      });
+      const projNet = totalGross * 0.70;
+      const divYieldPct = val > 0 ? (projNet / val * 100) : 0;
+      html += `<tr class="clickable-row" style="cursor:pointer;" onclick="window.location.href='dividends.html'">
+        <td style="vertical-align:middle;padding:6px 0;">
+          <div style="display:flex;align-items:center;">
+            <span class="sw" style="background:#166534;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:900;font-size:10px;width:15px;height:15px;border-radius:4px;margin-right:7px;line-height:1;">T</span>
+            <span class="nm" style="color:#166534;font-weight:900;">წლიური დივიდენდი (T DCA)</span>
+          </div>
+          <div style="font-size:9.5px;color:var(--muted);margin-left:22px;margin-top:2px;">მიღებული: <span style="color:#166534;font-weight:700;">${fmtUSD(totalDividends())}</span> &nbsp;·&nbsp; საპროგნოზო: <span style="color:#166534;font-weight:700;">${fmtUSD(projNet)}</span></div>
+        </td>
+        <td class="vv" style="color:#166534;font-weight:900;vertical-align:middle;padding:6px 0;">${fmtUSD(projNet)}</td>
+        <td class="pp" style="color:#166534;font-weight:900;vertical-align:middle;padding:6px 0;">${divYieldPct.toFixed(1)}%</td>
+      </tr>`;
+      leg.innerHTML = html;
+    }
+    const cv = document.getElementById('total-donut');
+    if (cv && typeof Chart !== 'undefined'){
+      const ex = Chart.getChart(cv); if (ex) ex.destroy();
+      new Chart(cv, {
+        type:'doughnut',
+        data:{ labels: parts.map(p=>p.name), datasets:[{ data: parts.map(p=>p.value), backgroundColor: parts.map(p=>p.color), borderWidth:3, borderColor:'#fffdf7' }] },
+        options:{ responsive:true, maintainAspectRatio:false, cutout:'72%',
+          plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label: c => `${c.label}: ${fmtUSD(c.parsed)}` } } } }
+      });
+    }
+    // fees + dividend goal repaint alongside the totals
+    renderPlatformFees();
+    renderDividendGoal();
+    // ----- today's move (day change) across all live holdings -----
+    // Sum (value − shares×previousClose) per holding; percent vs yesterday's value.
+    let dayDollar = 0, prevVal = 0;
+    for (const k of ['bog','tbc']){            // GALT is closed (value 0)
+      const p = portfolios[k]; if(!p) continue;
+      for (const h of p.holdings){
+        if (h.previousClose && h.shares !== undefined){
+          const prev = h.shares * h.previousClose;
+          prevVal += prev;
+          dayDollar += (h.value - prev);
+        }
+      }
+    }
+    const dayPct = prevVal > 0 ? (dayDollar / prevVal * 100) : 0;
+    window.__tpDay = { dollar: dayDollar, pct: dayPct, ready: prevVal > 0 };
+    const stamp = document.getElementById('total-live-stamp');
+    if (stamp){ const n=new Date(); stamp.textContent = `● LIVE · ${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`; }
+  }
+  renderTotal();
+  renderTotalMountain();
+
+  // ----- Portfolios Rating (Books) JS -----
+  var BOOKS = [
+    { key:'bog',  title:'BOG',  label:'Dogma',  sub:'გრძელვადიანი წიგნი', href:'#book-bog'  },
+    { key:'tbc',  title:'TBC',  label:'Active', sub:'სარისკო წიგნი',      href:'#book-tbc'  },
+    { key:'galt', title:'GALT', label:'Margin', sub:'ბერკეტი 2.5×',       href:'#book-galt' }
+  ];
+  var sortMode = 'total';
+
+  function bookStats(key) {
+    var p = portfolios[key];
+    var D = window.MEPORTF || {};
+    if (key === 'galt' && D.galt && D.galt.closed) {
+      var dep = +D.galt.deposit || 0, net = +D.galt.net || 0;
+      return { key: key, value: 0, deposits: dep, pnl: net,
+               pnlPct: dep > 0 ? (net / dep) * 100 : 0,
+               dayPnl: 0, dayPct: 0, havePrev: false, closed: true };
+    }
+    var a = aggregate(p);
+    var prevVal = 0, nowVal = 0, havePrev = false;
+    (p.holdings || []).forEach(function (h) {
+      var price = h.livePrice || (h.shares ? h.value / h.shares : 0);
+      if (h.previousClose && h.shares) {
+        prevVal += h.previousClose * h.shares;
+        nowVal  += price * h.shares;
+        havePrev = true;
+      }
+    });
+    var dayPnl = havePrev ? nowVal - prevVal : 0;
+    var base = prevVal + (p.cash || 0);
+    var dayPct = (havePrev && base !== 0) ? (dayPnl / Math.abs(base)) * 100 : 0;
+    return { key: key, value: a.currentValue, deposits: a.deposits, pnl: a.pnl, pnlPct: a.pnlPct,
+             dayPnl: dayPnl, dayPct: dayPct, havePrev: havePrev };
+  }
+
+  function fmtMoney(v) {
+    return '$' + (+v).toFixed(2);
+  }
+
+  function fmtSigned(n, suffix) {
+    var sign = n >= 0 ? '+' : '−';
+    return sign + Math.abs(n).toFixed(2) + (suffix || '');
+  }
+
+  function renderBooks() {
+    if (typeof portfolios === 'undefined' || typeof aggregate === 'undefined') return;
+    var stats = BOOKS.map(function (b) {
+      var s = bookStats(b.key); s.meta = b; return s;
+    });
+    stats.sort(function (a, b) {
+      if (!!a.closed !== !!b.closed) return a.closed ? 1 : -1; // closed books last
+      return sortMode === 'day' ? b.dayPct - a.dayPct : b.pnlPct - a.pnlPct;
+    });
+    var html = stats.map(function (s, i) {
+      var cls = s.closed ? 'closed' : (s.pnl >= 0 ? 'pos' : 'neg');
+      var dayCls = s.dayPnl >= 0 ? 'up' : 'dn';
+      var totCls = s.pnl >= 0 ? 'up' : 'dn';
+      return '<a class="bookcard" href="' + s.meta.href + '">'
+        + '<div class="bk ' + cls + '">'
+        + '<div class="rank-no">' + (i + 1) + '</div>'
+        + '<div class="inner">'
+        + '<div class="b-name">' + s.meta.title + '</div>'
+        + '<div class="b-sub">' + (s.closed ? 'დახურულია · CLOSED' : s.meta.sub + ' · ' + s.meta.label) + '</div>'
+        + '<hr>'
+        + '<div class="b-cap">მიმდინარე ღირებულება</div>'
+        + '<div class="b-val">' + fmtMoney(s.value) + '</div>'
+        + '<div class="b-row">'
+        + '<div class="cell"><div class="b-cap">P / L</div><div class="v ' + totCls + '">' + fmtSigned(s.pnl, '').replace(/^([+−])/, '$1$') + '</div></div>'
+        + '<div class="cell"><div class="b-cap">ჯამური</div><div class="v ' + totCls + '">' + fmtSigned(s.pnlPct, '%') + '</div></div>'
+        + '<div class="cell"><div class="b-cap">დღიური</div><div class="v ' + dayCls + '">' + (s.havePrev ? fmtSigned(s.dayPct, '%') : '—') + '</div></div>'
+        + '</div>'
+        + '<div class="b-dep">ჩარიცხული · ' + fmtMoney(s.deposits) + '</div>'
+        + '<div class="b-open">' + (s.closed ? 'ისტორია →' : 'გახსენი წიგნი →') + '</div>'
+        + '</div></div></a>';
+    }).join('');
+    var gridEl = document.getElementById('books-grid');
+    if (gridEl) gridEl.innerHTML = html;
+    
+    var stamp = document.getElementById('books-live-stamp');
+    if (stamp) {
+      var n = new Date();
+      stamp.textContent = `● LIVE · ${String(n.getHours()).padStart(2, '0')}:${String(n.getMinutes()).padStart(2, '0')}`;
+    }
+
+    var viewport = document.getElementById('books-grid-viewport');
+    if (viewport && !viewport.dataset.hasListener) {
+      viewport.addEventListener('scroll', updateCarouselArrows);
+      window.addEventListener('resize', updateCarouselArrows);
+      viewport.dataset.hasListener = 'true';
+    }
+    setTimeout(updateCarouselArrows, 100);
+  }
+
+  function updateCarouselArrows() {
+    var viewport = document.getElementById('books-grid-viewport');
+    var btnPrev = document.getElementById('books-carousel-prev');
+    var btnNext = document.getElementById('books-carousel-next');
+    if (!viewport || !btnPrev || !btnNext) return;
+    
+    var scrollLeft = viewport.scrollLeft;
+    var maxScrollLeft = viewport.scrollWidth - viewport.clientWidth;
+    
+    if (scrollLeft <= 5) {
+      btnPrev.classList.add('disabled');
+    } else {
+      btnPrev.classList.remove('disabled');
+    }
+    
+    if (scrollLeft >= maxScrollLeft - 5) {
+      btnNext.classList.add('disabled');
+    } else {
+      btnNext.classList.remove('disabled');
+    }
+  }
+
+  window.slideBooks = function(direction) {
+    var viewport = document.getElementById('books-grid-viewport');
+    if (!viewport) return;
+    var cards = viewport.getElementsByClassName('bookcard');
+    if (cards.length === 0) return;
+    var cardWidth = cards[0].offsetWidth;
+    var gap = 26;
+    var step = cardWidth + gap;
+    if (direction === 'prev') {
+      viewport.scrollBy({ left: -step, behavior: 'smooth' });
+    } else {
+      viewport.scrollBy({ left: step, behavior: 'smooth' });
+    }
+  };
+
+  window.setSort = function(mode) {
+    sortMode = mode;
+    var btnTotal = document.getElementById('sort-total');
+    var btnDay = document.getElementById('sort-day');
+    if (btnTotal) btnTotal.className = mode === 'total' ? 'on' : '';
+    if (btnDay) btnDay.className = mode === 'day' ? 'on' : '';
+    renderBooks();
+  }
+
+  renderBooks();
+
+  function refreshAllBooks(){ return Promise.all([refreshAll('bog'), refreshAll('tbc')]).then(renderTotal).then(renderBooks); }
+  refreshAllBooks();
+  // 20s poll. Finnhub free tier = 60 calls/min; 16 tickers × 3 cycles/min = 48,
+  // which fits. 12s (5 cycles/min = 80 calls) tripped 429s after ~40s and live
+  // prices silently stopped updating — don't go below 20s without batching.
+  const POLL_MS = 20000;
+  let _refreshTimer = setInterval(refreshAllBooks, POLL_MS);
+  // Repaint immediately when the user returns to the tab; pause while hidden.
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) { clearInterval(_refreshTimer); _refreshTimer = null; }
+    else if (!_refreshTimer) { refreshAllBooks(); _refreshTimer = setInterval(refreshAllBooks, POLL_MS); }
+  });
+</script>
+
+
+<script>
+// ============================================================
+// VIEW SWITCHER + consolidated all-assets table (Tab 2).
+// Reads the same live window.PORTFOLIOS the dashboard uses, so
+// the assets table repaints with the same 20s live prices.
+// ============================================================
+(function(){
+  'use strict';
+  function fmtUSD2(n){ return ((+n||0)<0?'−$':'$')+Math.abs(+n||0).toFixed(2); }
+
+  function holdingDetailCard(h){
+    var price=h.livePrice||h.avgBuy||0;
+    var value=(h.shares!==undefined&&price)?+(h.shares*price).toFixed(2):(+h.value||0);
+    var invested=h.invested||0, unreal=value-invested, unrealPct=invested>0?(unreal/invested*100):0;
+    var dayPct=h.dayChangePct;
+    var hasDay=(dayPct!==undefined&&dayPct!==null&&h.previousClose&&h.shares!==undefined);
+    var dayDollar=hasDay?+((price-h.previousClose)*h.shares).toFixed(2):null;
+    var ucls=unreal>=0?'pos':'neg', dcls=(dayPct>=0)?'pos':'neg';
+    var sess=(h.liveSession==='PRE')?' <span class="sess-badge pre">PRE</span>':(h.liveSession==='POST')?' <span class="sess-badge post">POST</span>':'';
+    var shares=(+h.shares).toFixed(8).replace(/0+$/,'').replace(/\.$/,'');
+    var rows=''
+      +'<tr><td>SHARES</td><td class="num">'+shares+'</td></tr>'
+      +'<tr><td>AVG BUY</td><td class="num">$'+(+h.avgBuy).toFixed(2)+'</td></tr>'
+      +'<tr><td>PRICE</td><td class="num">$'+price.toFixed(2)+sess+'</td></tr>'
+      +'<tr><td>INVESTED</td><td class="num">$'+invested.toFixed(2)+'</td></tr>'
+      +'<tr><td>VALUE</td><td class="num">$'+value.toFixed(2)+'</td></tr>'
+      +'<tr><td>UNREALISED</td><td class="num '+ucls+'">'+(unreal>=0?'+':'−')+'$'+Math.abs(unreal).toFixed(2)+' ('+(unreal>=0?'+':'−')+Math.abs(unrealPct).toFixed(2)+'%)</td></tr>'
+      +(dayDollar!==null?'<tr><td>DAY</td><td class="num '+dcls+'">'+(dayDollar>=0?'+':'−')+'$'+Math.abs(dayDollar).toFixed(2)+' ('+(dayPct>=0?'+':'−')+Math.abs(dayPct).toFixed(2)+'%)</td></tr>':'');
+    return '<div class="hcard"><table class="hcard-tbl">'+rows+'</table></div>';
+  }
+
+  function renderAssetsGrouped(){
+    var P = window.PORTFOLIOS; if(!P) return;
+    var host=document.getElementById('assets-groups'); if(!host) return;
+    var books=[{k:'bog',name:'BOG · Dogma',c:'#b91c1c'},{k:'tbc',name:'TBC · Income',c:'#1a1a1a'},{k:'galt',name:'GALT · Leverage',c:'#8b6914'}];
+    // preserve which rows are expanded so live refresh doesn't collapse them
+    var openTk={};
+    host.querySelectorAll('details.ag-row[open]').forEach(function(d){ openTk[d.getAttribute('data-tk')]=1; });
+    var out='';
+    var totInv=0,totVal=0,totDayD=0,totDayBase=0;
+    books.forEach(function(b){
+      var p=P[b.k]; var hs=(p&&p.holdings)?p.holdings.slice():[];
+      var gVal=0,gInv=0; hs.forEach(function(h){ gVal+=(+h.value||0); gInv+=(+h.invested||0); });
+      var gpl=gVal-gInv, gcls=gpl>=0?'pos':'neg';
+      var gplPct=gInv>0?(gpl/gInv*100):0;
+      // group daily change: sum of (price − prevClose)×shares over holdings with live data
+      var gDayD=0,gDayBase=0;
+      hs.forEach(function(h){
+        if(h.previousClose&&h.shares!==undefined){
+          var pr=h.livePrice||h.avgBuy||0;
+          gDayD+=(pr-h.previousClose)*h.shares;
+          gDayBase+=h.previousClose*h.shares;
+        }
+      });
+      var gDayPct=gDayBase>0?(gDayD/gDayBase*100):null;
+      totInv+=gInv; totVal+=gVal; totDayD+=gDayD; totDayBase+=gDayBase;
+      var dTxt=(gDayPct===null)?'':' · დღეს <span class="'+(gDayD>=0?'pos':'neg')+'">'+(gDayPct>=0?'+':'−')+Math.abs(gDayPct).toFixed(2)+'%</span>';
+      out+='<div class="asset-group"><div class="ag-head">'
+        +'<span class="ag-book"><span class="dot" style="background:'+b.c+'"></span>'+b.name+'</span>';
+      out+= hs.length
+        ? '<span class="ag-sum">'+hs.length+' პოზ · ჩად. '+fmtUSD2(gInv)+' → '+fmtUSD2(gVal)+' · <span class="'+gcls+'">'+(gpl>=0?'+$':'−$')+Math.abs(gpl).toFixed(2)+' ('+(gpl>=0?'+':'−')+Math.abs(gplPct).toFixed(2)+'%)</span>'+dTxt+'</span>'
+        : '<span class="ag-sum">დახურული · $0.00</span>';
+      out+='</div>';
+      if(!hs.length){
+        out+='<div class="ag-empty">ღია პოზიცია არ არის — ანგარიში დახურულია.</div>';
+      } else {
+        hs.sort(function(a,b){ return (+b.value||0)-(+a.value||0); });
+        hs.forEach(function(h){
+          var price=h.livePrice||h.avgBuy||0;
+          var value=(h.shares!==undefined&&price)?+(h.shares*price).toFixed(2):(+h.value||0);
+          var dayPct=h.dayChangePct;
+          var hasDay=(dayPct!==undefined&&dayPct!==null&&h.previousClose&&h.shares!==undefined);
+          var dcls=(dayPct>=0)?'pos':'neg';
+          var dayTxt=hasDay?((dayPct>=0?'+':'−')+Math.abs(dayPct).toFixed(2)+'%'):'—';
+          var op=openTk[h.ticker]?' open':'';
+          out+='<details class="ag-row" data-tk="'+h.ticker+'"'+op+'><summary>'
+            +'<span><span class="ag-tk">'+h.ticker+'</span><span class="ag-nm">'+(h.name||'').toUpperCase()+'</span></span>'
+            +'<span class="ag-val">'+fmtUSD2(value)+'</span>'
+            +'<span class="ag-day '+(hasDay?dcls:'')+'">'+dayTxt+'</span>'
+            +'</summary><div class="ag-detail">'+holdingDetailCard(h)+'</div></details>';
+        });
+      }
+      out+='</div>';
+    });
+    // grand total across all books: invested → now · overall % · daily %
+    var tp=totVal-totInv, tpc=totInv>0?(tp/totInv*100):0, tcls=tp>=0?'pos':'neg';
+    var tDayPct=totDayBase>0?(totDayD/totDayBase*100):null;
+    var tDayTxt=(tDayPct===null)?'':' · დღეს <span class="'+(totDayD>=0?'pos':'neg')+'">'+(tDayPct>=0?'+':'−')+Math.abs(tDayPct).toFixed(2)+'% ('+(totDayD>=0?'+$':'−$')+Math.abs(totDayD).toFixed(2)+')</span>';
+    var grand='<div class="ag-grand"><span class="ag-grand-l">სულ · ALL BOOKS</span><span class="ag-sum">ჩადებული '+fmtUSD2(totInv)+' → ახლა '+fmtUSD2(totVal)+' · <span class="'+tcls+'">'+(tp>=0?'+$':'−$')+Math.abs(tp).toFixed(2)+' ('+(tp>=0?'+':'−')+Math.abs(tpc).toFixed(2)+'%)</span>'+tDayTxt+'</span></div>';
+    host.innerHTML=grand+out;
+    var stamp=document.getElementById('assets-live-stamp');
+    if(stamp){ var n=new Date(); stamp.textContent='● LIVE · '+String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0'); }
+  }
+
+  function renderIssuesTab() {
+    var container = document.getElementById('issues-list');
+    if (!container) return;
+    fetch('issues/issues.json')
+      .then(function(res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then(function(data) {
+        if (!Array.isArray(data) || data.length === 0) {
+          container.innerHTML = '<div class="empty-state" style="padding:40px 14px; text-align:center; color:var(--muted); font-family:\'Noto Sans Georgian\',sans-serif; background:var(--paper); border:1px solid var(--border); border-top:2px solid var(--rule);">No issues yet — press Save as PDF to create one.</div>';
+          return;
+        }
+        data.sort(function(a, b) { return new Date(b.date || 0) - new Date(a.date || 0); });
+        var html = '<div style="display:grid; gap:12px;">';
+        data.forEach(function(issue) {
+          var title = issue.title || issue.file || 'Issue';
+          var dateStr = issue.date ? (typeof fmtDate === 'function' ? fmtDate(issue.date) : issue.date) : '';
+          var filePath = 'issues/' + issue.file;
+          html += '<div style="background:var(--paper); border:1px solid var(--border); border-top:2px solid var(--ink); padding:14px 18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">'
+            + '<div>'
+            + '<div style="font-family:\'Noto Serif Georgian\',serif; font-weight:800; font-size:18px; color:var(--ink);">' + title + '</div>'
+            + (dateStr ? '<div style="font-family:\'Noto Sans Georgian\',sans-serif; font-size:11px; color:var(--muted); margin-top:3px;">' + dateStr + '</div>' : '')
+            + '</div>'
+            + '<div style="display:flex; gap:8px;">'
+            + '<a href="' + filePath + '" target="_blank" style="font-family:\'Noto Sans Georgian\',sans-serif; font-size:11px; font-weight:700; color:var(--ink); border:1px solid var(--border); padding:6px 12px; text-decoration:none; text-transform:uppercase; letter-spacing:1px; background:var(--bg);">View ↗</a>'
+            + '<a href="' + filePath + '" download style="font-family:\'Noto Sans Georgian\',sans-serif; font-size:11px; font-weight:700; color:var(--red); border:1px solid var(--red); padding:6px 12px; text-decoration:none; text-transform:uppercase; letter-spacing:1px; background:var(--paper);">Download ⤓</a>'
+            + '</div>'
+            + '</div>';
+        });
+        html += '</div>';
+        container.innerHTML = html;
+      })
+      .catch(function() {
+        container.innerHTML = '<div class="empty-state" style="padding:40px 14px; text-align:center; color:var(--muted); font-family:\'Noto Sans Georgian\',sans-serif; background:var(--paper); border:1px solid var(--border); border-top:2px solid var(--rule);">No issues yet — press Save as PDF to create one.</div>';
+      });
+  }
+
+  var btns=document.querySelectorAll('.tp-tab-btn');
+  var panes=document.querySelectorAll('.tp-tab-pane');
+  btns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var id=btn.getAttribute('data-pane');
+      btns.forEach(function(b){ var on=(b===btn); b.classList.toggle('active',on); b.setAttribute('aria-selected',on?'true':'false'); });
+      panes.forEach(function(p){ p.classList.toggle('active', p.id===id); });
+      if(id==='tab-assets') renderAssetsGrouped();
+      if(id==='tab-history') drawHistory();
+      if(id==='tab-issues') renderIssuesTab();
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+  });
+  renderAssetsGrouped();
+  renderIssuesTab();
+  setInterval(function(){ var pane=document.getElementById('tab-assets'); if(pane && pane.classList.contains('active')) renderAssetsGrouped(); }, 20000);
+
+  // ============================================================
+  // TAB 3 · ტრანზაქციების ისტორია · combined transaction history logic
+  // ============================================================
+  let allTx = [];
+  let histPage = 1;
+  const histPerPage = 15;
+
+  function initCombinedHistory() {
+    const P = window.PORTFOLIOS; if(!P) return;
+    allTx = [];
+    const bookMeta = {
+      bog: { name: 'BOG · Dogma', color: '#b91c1c' },
+      tbc: { name: 'TBC · Income', color: '#1a1a1a' },
+      galt: { name: 'GALT · Leverage', color: '#8b6914' }
+    };
+    
+    // Merge all portfolios' transactions
+    for (const key in bookMeta) {
+      if (P[key] && P[key].transactions) {
+        P[key].transactions.forEach(function(tx) {
+          allTx.push(Object.assign({}, tx, {
+            bookKey: key,
+            bookName: bookMeta[key].name,
+            bookColor: bookMeta[key].color
+          }));
+        });
+      }
+    }
+    
+    // Sort all by date descending (newest first).
+    allTx.sort(function(a, b) { return new Date(b.date) - new Date(a.date); });
+
+    // Realized P/L per SELL — average cost method, fees on BOTH sides included:
+    // buy cost = shares×price + buy fee; on sell: P/L = (shares×price − sell fee) − proportional cost basis.
+    (function(){
+      var asc = allTx.slice().sort(function(a,b){ return new Date(a.date) - new Date(b.date); });
+      var pos = {}; // bookKey|ticker → { sh, cost }
+      asc.forEach(function(tx){
+        if (!tx.ticker) return;
+        var k = tx.bookKey + '|' + tx.ticker;
+        if (tx.type === 'buy') {
+          var st = pos[k] || (pos[k] = { sh: 0, cost: 0 });
+          st.sh   += (+tx.shares || 0);
+          st.cost += (+tx.shares || 0) * (+tx.price || 0) + (+tx.commission || 0);
+        } else if (tx.type === 'sell') {
+          var st2 = pos[k];
+          if (st2 && st2.sh > 0) {
+            var s = Math.min(+tx.shares || 0, st2.sh);
+            var costOut  = st2.cost * (s / st2.sh);
+            var proceeds = s * (+tx.price || 0) - (+tx.commission || 0);
+            tx._pl    = +(proceeds - costOut).toFixed(2);
+            tx._plPct = costOut > 0 ? ((proceeds - costOut) / costOut) * 100 : 0;
+            st2.sh -= s; st2.cost -= costOut;
+          }
+        }
+      });
+    })();
+    
+    // Load saved filters
+    loadFilters();
+    
+    // Event listeners
+    const searchEl = document.getElementById('hist-search');
+    const bookEl = document.getElementById('hist-filter-book');
+    const typeEl = document.getElementById('hist-filter-type');
+    const startEl = document.getElementById('hist-date-start');
+    const endEl = document.getElementById('hist-date-end');
+    const resetEl = document.getElementById('hist-reset');
+    
+    if (searchEl) searchEl.addEventListener('input', onFilterChange);
+    if (bookEl) bookEl.addEventListener('change', onFilterChange);
+    if (typeEl) typeEl.addEventListener('change', onFilterChange);
+    if (startEl) startEl.addEventListener('change', onFilterChange);
+    if (endEl) endEl.addEventListener('change', onFilterChange);
+    
+    if (resetEl) {
+      resetEl.addEventListener('click', function() {
+        if (searchEl) searchEl.value = '';
+        if (bookEl) bookEl.value = 'all';
+        if (typeEl) typeEl.value = 'all';
+        if (startEl) startEl.value = '';
+        if (endEl) endEl.value = '';
+        saveFilters();
+        histPage = 1;
+        drawHistory();
+      });
+    }
+    
+    // Draw immediately if history tab is active
+    const activeBtn = document.querySelector('.tp-tab-btn.active');
+    if (activeBtn && activeBtn.getAttribute('data-pane') === 'tab-history') {
+      drawHistory();
+    }
+  }
+
+  function onFilterChange() {
+    saveFilters();
+    histPage = 1;
+    drawHistory();
+  }
+
+  function loadFilters() {
+    try {
+      const s = localStorage.getItem('hist_search') || '';
+      const b = localStorage.getItem('hist_book') || 'all';
+      const t = localStorage.getItem('hist_type') || 'all';
+      const sd = localStorage.getItem('hist_start') || '';
+      const ed = localStorage.getItem('hist_end') || '';
+      
+      const searchEl = document.getElementById('hist-search');
+      const bookEl = document.getElementById('hist-filter-book');
+      const typeEl = document.getElementById('hist-filter-type');
+      const startEl = document.getElementById('hist-date-start');
+      const endEl = document.getElementById('hist-date-end');
+      
+      if (searchEl) searchEl.value = s;
+      if (bookEl) bookEl.value = b;
+      if (typeEl) typeEl.value = t;
+      if (startEl) startEl.value = sd;
+      if (endEl) endEl.value = ed;
+    } catch(e) {}
+  }
+
+  function saveFilters() {
+    try {
+      const searchEl = document.getElementById('hist-search');
+      const bookEl = document.getElementById('hist-filter-book');
+      const typeEl = document.getElementById('hist-filter-type');
+      const startEl = document.getElementById('hist-date-start');
+      const endEl = document.getElementById('hist-date-end');
+      
+      localStorage.setItem('hist_search', searchEl ? searchEl.value : '');
+      localStorage.setItem('hist_book', bookEl ? bookEl.value : 'all');
+      localStorage.setItem('hist_type', typeEl ? typeEl.value : 'all');
+      localStorage.setItem('hist_start', startEl ? startEl.value : '');
+      localStorage.setItem('hist_end', endEl ? endEl.value : '');
+    } catch(e) {}
+  }
+
+  function renderTxHist(tx) {
+    const dateStr = typeof fmtDate === 'function' ? fmtDate(tx.date) : tx.date;
+    const date = `<span class="tx-date">${dateStr}</span>`;
+    const bookBadge = `<span class="tx-book-badge" style="background:${tx.bookColor}; color:#fff; display:inline-block; padding:3px 8px; border-radius:2px; font-size:10px; font-weight:700; letter-spacing:1px; text-align:center; text-transform:uppercase; min-width:90px;">${tx.bookKey.toUpperCase()}</span>`;
+    
+    // Commission helper
+    const comm = tx.commission || 0;
+    const totalBuyPaid = tx.shares * tx.price + comm;
+    const totalSellRecv = tx.shares * tx.price - comm;
+
+    if (tx.type === 'deposit') {
+      const isTransfer = tx.amount < 0 || /transfer|გადატანა|გადმოტანა/i.test(tx.note || '');
+      const badgeText = isTransfer ? 'TRANSFER' : 'DEPOSIT';
+      return `<div class="tx-hist">
+        ${date}
+        <span class="tx-badge badge-deposit">${badgeText}</span>
+        ${bookBadge}
+        <span class="tx-line"><strong>${tx.amount < 0 ? '-' : '+'}${fmtMoney(Math.abs(tx.amount))}</strong> &nbsp;${tx.note ? tx.note : 'CASH'}</span>
+      </div>`;
+    }
+    
+    if (tx.type === 'withdraw') {
+      return `<div class="tx-hist">
+        ${date}
+        <span class="tx-badge badge-sell">WITHDRAW</span>
+        ${bookBadge}
+        <span class="tx-line"><strong>-${fmtMoney(tx.amount)}</strong> &nbsp;CASH გატანა${tx.note ? ` · <span class="muted">${tx.note}</span>` : ''}</span>
+      </div>`;
+    }
+    
+    if (tx.type === 'buy') {
+      return `<div class="tx-hist">
+        ${date}
+        <span class="tx-badge badge-buy">BUY</span>
+        ${bookBadge}
+        <span class="tx-line">
+          <strong>${tx.ticker}</strong> ·
+          ${tx.shares} sh @ ${fmtMoney(tx.price)}${tx.commission ? ` · <span class="muted">fee ${fmtMoney(tx.commission)}</span>` : ''} ·
+          paid <strong>${fmtMoney(totalBuyPaid)}</strong>
+        </span>
+      </div>`;
+    }
+    
+    if (tx.type === 'sell') {
+      const plTxt = (tx._pl !== undefined)
+        ? ` · <strong style="color:${tx._pl >= 0 ? 'var(--green)' : 'var(--red)'}">P/L ${tx._pl >= 0 ? '+' : '−'}${fmtMoney(Math.abs(tx._pl))} (${tx._pl >= 0 ? '+' : '−'}${Math.abs(tx._plPct).toFixed(2)}%)</strong>`
+        : '';
+      return `<div class="tx-hist">
+        ${date}
+        <span class="tx-badge badge-sell">SELL</span>
+        ${bookBadge}
+        <span class="tx-line">
+          <strong>${tx.ticker}</strong> ·
+          ${tx.shares} sh @ ${fmtMoney(tx.price)}${tx.commission ? ` · <span class="muted">fee ${fmtMoney(tx.commission)}</span>` : ''} ·
+          received <strong>${fmtMoney(totalSellRecv)}</strong>${plTxt}
+        </span>
+      </div>`;
+    }
+    
+    if (tx.type === 'dividend') {
+      return `<div class="tx-hist">
+        ${date}
+        <span class="tx-badge badge-deposit">DIVIDEND</span>
+        ${bookBadge}
+        <span class="tx-line"><strong>${tx.ticker || ''}</strong> &nbsp;+${fmtMoney(tx.amount)}${tx.note ? ` · <span class="muted">${tx.note}</span>` : ''}</span>
+      </div>`;
+    }
+    
+    if (tx.type === 'fee') {
+      return `<div class="tx-hist">
+        ${date}
+        <span class="tx-badge badge-fee">FEE</span>
+        ${bookBadge}
+        <span class="tx-line">-${fmtMoney(tx.amount)} ${tx.note ? '· ' + tx.note : ''}</span>
+      </div>`;
+    }
+    
+    return '';
+  }
+
+  window.drawHistory = function() {
+    const searchEl = document.getElementById('hist-search');
+    const bookEl = document.getElementById('hist-filter-book');
+    const typeEl = document.getElementById('hist-filter-type');
+    const startEl = document.getElementById('hist-date-start');
+    const endEl = document.getElementById('hist-date-end');
+
+    const searchVal = searchEl ? searchEl.value.toLowerCase().trim() : '';
+    const bookVal = bookEl ? bookEl.value : 'all';
+    const typeVal = typeEl ? typeEl.value : 'all';
+    const startVal = startEl ? startEl.value : '';
+    const endVal = endEl ? endEl.value : '';
+    
+    const filtered = allTx.filter(function(tx) {
+      if (searchVal) {
+        const tickerMatch = tx.ticker && tx.ticker.toLowerCase().includes(searchVal);
+        const noteMatch = tx.note && tx.note.toLowerCase().includes(searchVal);
+        if (!tickerMatch && !noteMatch) return false;
+      }
+      if (bookVal !== 'all' && tx.bookKey !== bookVal) return false;
+      if (typeVal !== 'all' && tx.type !== typeVal) return false;
+      if (startVal && tx.date < startVal) return false;
+      if (endVal && tx.date > endVal) return false;
+      return true;
+    });
+    
+    // Aggregates
+    let deposits = 0, withdrawals = 0, fees = 0, dividends = 0, bought = 0, sold = 0;
+    filtered.forEach(function(tx) {
+      const isTransfer = tx.note && /transfer|გადატანა|გადმოტანა/i.test(tx.note);
+      
+      if (tx.type === 'deposit') {
+        if (tx.amount >= 0) {
+          if (!isTransfer) deposits += tx.amount;
+        } else {
+          if (!isTransfer) withdrawals += Math.abs(tx.amount);
+        }
+      }
+      else if (tx.type === 'withdraw') {
+        if (!isTransfer) withdrawals += tx.amount;
+      }
+      else if (tx.type === 'fee') fees += tx.amount;
+      else if (tx.type === 'dividend') dividends += tx.amount;
+      else if (tx.type === 'buy') {
+        bought += tx.shares * tx.price;
+        if (tx.commission) fees += tx.commission;
+      }
+      else if (tx.type === 'sell') {
+        sold += tx.shares * tx.price;
+        if (tx.commission) fees += tx.commission;
+      }
+    });
+    
+    const summaryEl = document.getElementById('hist-summary');
+    if (summaryEl) {
+      summaryEl.innerHTML = `
+        <div class="summary-grid" style="margin-bottom: 24px;">
+          <div class="summary-card">
+            <div class="summary-label">სუფთა ჩარიცხვა</div>
+            <div class="summary-value" style="color:var(--green);">${fmtMoney(deposits)}</div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-label">სუფთა გატანა</div>
+            <div class="summary-value" style="color:var(--muted);">${fmtMoney(withdrawals)}</div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-label">დივიდენდები</div>
+            <div class="summary-value" style="color:#0284c7;">${fmtMoney(dividends)}</div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-label">ჯამური საკომისიო</div>
+            <div class="summary-value" style="color:var(--red);">${fmtMoney(fees)}</div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-label">ნაყიდი აქტივები</div>
+            <div class="summary-value">${fmtMoney(bought)}</div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-label">გაყიდული აქტივები</div>
+            <div class="summary-value">${fmtMoney(sold)}</div>
+          </div>
+        </div>
+      `;
+    }
+    
+    const listContainer = document.getElementById('hist-tx-list');
+    const pagerContainer = document.getElementById('hist-pager');
+    
+    if (!listContainer) return;
+    
+    if (filtered.length === 0) {
+      listContainer.innerHTML = `<div class="empty-state" style="padding:40px 14px; text-align:center; color:var(--muted); font-family:sans-serif; background:var(--paper); border:1px solid var(--border); border-top:2px solid var(--rule);">ტრანზაქციები მოცემული ფილტრით ვერ მოიძებნა.</div>`;
+      if (pagerContainer) pagerContainer.innerHTML = '';
+      return;
+    }
+    
+    const totalPages = Math.ceil(filtered.length / histPerPage);
+    if (histPage > totalPages) histPage = totalPages;
+    if (histPage < 1) histPage = 1;
+    
+    const startIdx = (histPage - 1) * histPerPage;
+    const pageSlice = filtered.slice(startIdx, startIdx + histPerPage);
+    
+    listContainer.innerHTML = pageSlice.map(renderTxHist).join('');
+    
+    if (pagerContainer) {
+      let pagerHtml = '';
+      if (histPage > 1) {
+        pagerHtml += `<button class="page-link" data-hp="${histPage - 1}">← წინა</button>`;
+      }
+      for (let p = 1; p <= totalPages; p++) {
+        pagerHtml += p === histPage 
+          ? `<span class="page-current">${p}</span>` 
+          : `<button class="page-link" data-hp="${p}">${p}</button>`;
+      }
+      if (histPage < totalPages) {
+        pagerHtml += `<button class="page-link" data-hp="${histPage + 1}">შემდეგი →</button>`;
+      }
+      pagerContainer.innerHTML = pagerHtml;
+      
+      pagerContainer.querySelectorAll('button').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          histPage = +btn.dataset.hp;
+          drawHistory();
+        });
+      });
+    }
+  };
+
+  // Wait for portfolios to load, then initialize
+  if (window.PORTFOLIOS) {
+    initCombinedHistory();
+  } else {
+    // If not loaded yet, check every 100ms
+    const checkInt = setInterval(function() {
+      if (window.PORTFOLIOS) {
+        clearInterval(checkInt);
+        initCombinedHistory();
+      }
+    }, 100);
+  }
+})();
+</script>
+
+
+<script src="js/mountain-range.js"></script>
+<script src="js/enhance.js?v=20260710a"></script>
+<script src="js/i18n.js?v=1"></script>
+</body>
+</html>

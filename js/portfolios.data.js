@@ -14,22 +14,95 @@ window.PORTFOLIOS = {
     tagline: 'გრძელვადიანი DCA · $100-200/თვე · მიზანი 35%/წელი',
     startDate: '2025-12-09',
     annualGoalPct: 35,
-    holdings: [
-      // Cached values from Issue 07 snapshot — live prices repaint these every 10s.
-      // divYield = approx. annual dividend yield in % (BOG taxes dividends 30% at source → net = gross × 0.70)
-      { ticker: 'MSTR', name: 'Strategy Inc', shares: 1.02519351, avgBuy: 92.82, invested: 95.16, value: 95.16, color: '#1a1a1a', divYield: 0.00 },
-      { ticker: 'KOID', name: 'KraneShares Humanoid Robotics ETF', shares: 3.34000784, avgBuy: 40.15, invested: 134.11, value: 125.72, color: '#4b5563', divYield: 0.01 },
-      { ticker: 'SSRM', name: 'SSR Mining Inc', shares: 5.12306947, avgBuy: 29.73, invested: 152.32, value: 147.90, color: '#0891b2', divYield: 0.00 },
-      { ticker: 'VRT', name: 'Vertiv Holdings Co', shares: 0.16056065, avgBuy: 314.52, invested: 50.50, value: 48.35, color: '#3d8c7a', divYield: 0.08 },
-      { ticker: 'CRDO', name: 'Credo Technology Group Holding', shares: 0.10565843, avgBuy: 270.02, invested: 28.53, value: 24.12, color: '#9d174d', divYield: 0.00 },
-    ],
-    cash: 0.00, // 23 Jul 2026: withdrew full $1,161.44 ($1,140 transfer to TBC, $9.44 pocket, $12 bank fee)
+    holdings: [],
+    cash: 673.89, // 07 Aug 2026: SNXX position closed @ $673.89 -> net cash in BOG $673.89
     priorDeposits: 997.66,
     priorCostBasis: 1007.05,
     transactions: [
       // Newest first
-      { date: '2026-07-23', type: 'buy',  ticker: 'MSTR', shares: 0.02519351, price: 92.88, commission: 0 },
-      { date: '2026-07-23', type: 'buy',  ticker: 'MSTR', shares: 1.00000000, price: 92.82, commission: 0 },
+      // --- 07 აგვ 2026 BOG SNXX round-trip scalp · BOG app · net cash $673.89 ---
+      { date: '2026-08-07', type: 'sell', ticker: 'SNXX', shares: 72.21708957, price: 9.33144815, commission: 0 },
+      { date: '2026-08-07', type: 'buy',  ticker: 'SNXX', shares: 72.21708957, price: 9.30860857, commission: 0 },
+      // --- 05 აგვ 2026 BOG 30+ intraday trades · BOG app · net cash $790.49 (+ $3.15 P/L) ---
+      // --- 04 აგვ 2026 BOG GOOGL scalp · BOG app · $0.01 fee · net cash $787.34 (+ $1.56 P/L) ---
+      { date: '2026-08-04', type: 'sell', ticker: 'GOOGL', shares: 0.07624049, price: 379.1947, commission: 0 },
+      { date: '2026-08-04', type: 'sell', ticker: 'GOOGL', shares: 2.00000000, price: 379.215,  commission: 0 },
+      { date: '2026-08-04', type: 'buy',  ticker: 'GOOGL', shares: 0.07624049, price: 378.4077, commission: 0.01 },
+      { date: '2026-08-04', type: 'buy',  ticker: 'GOOGL', shares: 1.00000000, price: 378.46,   commission: 0 },
+      { date: '2026-08-04', type: 'buy',  ticker: 'GOOGL', shares: 1.00000000, price: 378.46,   commission: 0 },
+      // --- 04 აგვ 2026 BOG SNDK liquidation & intraday scalp · BOG app · commission-free · net cash $785.78 ---
+      { date: '2026-08-04', type: 'sell', ticker: 'SNDK', shares: 0.55453637, price: 1417.00355, commission: 0 },
+      { date: '2026-08-04', type: 'buy',  ticker: 'SNDK', shares: 0.55453637, price: 1428.5988,  commission: 0 },
+      { date: '2026-08-04', type: 'sell', ticker: 'SNDK', shares: 0.33020674, price: 1396.8522,  commission: 0 },
+      { date: '2026-08-04', type: 'sell', ticker: 'SNDK', shares: 0.03583609, price: 1395.2415,  commission: 0 },
+      { date: '2026-08-04', type: 'sell', ticker: 'SNDK', shares: 0.07050187, price: 1372.8714,  commission: 0 },
+      { date: '2026-08-04', type: 'sell', ticker: 'SNDK', shares: 0.13541911, price: 1360.00,    commission: 0 },
+      // --- 30 Jul 2026 BOG rotation: MNST liquidation → SNDK buy · BOG app · commission-free · net cash $0.00 ---
+      { date: '2026-07-30', type: 'buy',  ticker: 'SNDK', shares: 0.14687144, price: 1259.4688, commission: 0 },
+      { date: '2026-07-30', type: 'sell', ticker: 'MNST', shares: 0.92424354, price: 96.1328,   commission: 0 },
+      { date: '2026-07-30', type: 'sell', ticker: 'MNST', shares: 1.00000000, price: 96.1300,   commission: 0 },
+      // --- 29 Jul 2026 deposit ($339.87) & purchases · BOG app ---
+      { date: '2026-07-29', type: 'buy',  ticker: 'MNST',  shares: 0.92424354, price: 98.74,   commission: 0 },
+      { date: '2026-07-29', type: 'buy',  ticker: 'MNST',  shares: 1.00000000, price: 98.74,   commission: 0 },
+      { date: '2026-07-29', type: 'buy',  ticker: 'SNDK',  shares: 0.00968542, price: 1032.48, commission: 0 },
+      { date: '2026-07-29', type: 'buy',  ticker: 'SNDK',  shares: 0.04778475, price: 1046.36, commission: 0 },
+      { date: '2026-07-29', type: 'buy',  ticker: 'SNDK',  shares: 0.04741229, price: 1054.58, commission: 0 },
+      { date: '2026-07-29', type: 'buy',  ticker: 'SNDK',  shares: 0.03792127, price: 1051.39, commission: 0 },
+      { date: '2026-07-29', type: 'deposit', amount: 339.87 },
+      // --- 24 Jul 2026 19:33 SSRM final liquidation → SNDK top-up ---
+      { date: '2026-07-24', type: 'buy',  ticker: 'SNDK',  shares: 0.09225935, price: 1500.12,   commission: 0 },
+      { date: '2026-07-24', type: 'sell', ticker: 'SSRM',  shares: 0.05993725, price: 27.362,    commission: 0 },
+      { date: '2026-07-24', type: 'sell', ticker: 'SSRM',  shares: 5.00000000, price: 27.352,    commission: 0 },
+      // --- 24 Jul 2026 intraday scalps & rebalancing · BOG app · commission-free · net cash $0.00 ---
+      { date: '2026-07-24', type: 'buy',  ticker: 'SNDK',  shares: 0.00115663, price: 1504.37,   commission: 0 },
+      { date: '2026-07-24', type: 'sell', ticker: 'SSRM',  shares: 0.06313222, price: 27.56,     commission: 0 },
+      { date: '2026-07-24', type: 'buy',  ticker: 'SNDK',  shares: 0.04649844, price: 1496.39,   commission: 0 },
+      { date: '2026-07-24', type: 'sell', ticker: 'MSTR',  shares: 0.75274572, price: 92.4349,   commission: 0 },
+      { date: '2026-07-24', type: 'buy',  ticker: 'MSTR',  shares: 0.75274572, price: 92.2888,   commission: 0 },
+      { date: '2026-07-24', type: 'sell', ticker: 'AAL',   shares: 0.82695175, price: 14.3902,   commission: 0 },
+      { date: '2026-07-24', type: 'sell', ticker: 'AAL',   shares: 4.00000000, price: 14.3925,   commission: 0 },
+      { date: '2026-07-24', type: 'buy',  ticker: 'AAL',   shares: 0.82695175, price: 14.3539,   commission: 0 },
+      { date: '2026-07-24', type: 'buy',  ticker: 'AAL',   shares: 4.00000000, price: 14.3475,   commission: 0 },
+      { date: '2026-07-24', type: 'sell', ticker: 'MSTR',  shares: 0.75154874, price: 92.1564,   commission: 0 },
+      { date: '2026-07-24', type: 'buy',  ticker: 'MSTR',  shares: 0.75154874, price: 92.0100,   commission: 0 },
+      { date: '2026-07-24', type: 'sell', ticker: 'INTC',  shares: 0.71727963, price: 96.4059,   commission: 0 },
+      { date: '2026-07-24', type: 'buy',  ticker: 'INTC',  shares: 0.71727963, price: 97.3400,   commission: 0 },
+      { date: '2026-07-24', type: 'sell', ticker: 'MSTR',  shares: 0.76437096, price: 91.3428,   commission: 0 },
+      { date: '2026-07-24', type: 'buy',  ticker: 'MSTR',  shares: 0.76437096, price: 91.3298,   commission: 0 },
+      { date: '2026-07-24', type: 'sell', ticker: 'RNG',   shares: 0.46780064, price: 47.5629,   commission: 0 },
+      { date: '2026-07-24', type: 'sell', ticker: 'RNG',   shares: 1.00000000, price: 47.5600,   commission: 0 },
+      { date: '2026-07-24', type: 'buy',  ticker: 'RNG',   shares: 0.46780064, price: 47.6912,   commission: 0 },
+      { date: '2026-07-24', type: 'buy',  ticker: 'RNG',   shares: 1.00000000, price: 47.6900,   commission: 0 },
+      { date: '2026-07-24', type: 'sell', ticker: 'AAL',   shares: 0.97056014, price: 14.0846,   commission: 0 },
+      { date: '2026-07-24', type: 'sell', ticker: 'AAL',   shares: 4.00000000, price: 14.0825,   commission: 0 },
+      { date: '2026-07-24', type: 'buy',  ticker: 'AAL',   shares: 0.97056014, price: 14.0331,   commission: 0 },
+      { date: '2026-07-24', type: 'buy',  ticker: 'AAL',   shares: 4.00000000, price: 14.0275,   commission: 0 },
+      { date: '2026-07-24', type: 'sell', ticker: 'THC',   shares: 0.28834853, price: 241.8254,  commission: 0 },
+      { date: '2026-07-24', type: 'buy',  ticker: 'THC',   shares: 0.28834853, price: 241.9988,  commission: 0 },
+      { date: '2026-07-24', type: 'sell', ticker: 'GOOGL', shares: 0.21895639, price: 318.6936,  commission: 0 },
+      { date: '2026-07-24', type: 'buy',  ticker: 'GOOGL', shares: 0.21895639, price: 320.7437,  commission: 0 },
+      { date: '2026-07-24', type: 'sell', ticker: 'CRDO',  shares: 0.10565843, price: 215.0325,  commission: 0 },
+      { date: '2026-07-24', type: 'sell', ticker: 'VRT',   shares: 0.16056065, price: 295.9006,  commission: 0 },
+      { date: '2026-07-24', type: 'buy',  ticker: 'SNDK',  shares: 0.08165826, price: 1477.988,  commission: 0 },
+      { date: '2026-07-24', type: 'sell', ticker: 'KOID',  shares: 0.34000784, price: 36.1462,   commission: 0 },
+      { date: '2026-07-24', type: 'sell', ticker: 'KOID',  shares: 3.00000000, price: 36.1333,   commission: 0 },
+      // --- 23 Jul 2026 (evening) · intraday scalps · BOG app · commission-free · net cash $0.00 (sells $385.08 = buys $385.08) ---
+      // MSTR opened then flipped same day (+$1.46). SNDK & HIMS round-tripped; HIMS net −$2.43; day realized ≈ −$0.73. Ends: SNDK 0.05694973 sh open.
+      { date: '2026-07-23', type: 'buy',  ticker: 'MSTR', shares: 1.00000000, price: 92.82,    commission: 0 }, // reshuffle open
+      { date: '2026-07-23', type: 'buy',  ticker: 'MSTR', shares: 0.02519351, price: 92.88,    commission: 0 }, // reshuffle open
+      { date: '2026-07-23', type: 'sell', ticker: 'MSTR', shares: 1.00000000, price: 94.25,    commission: 0 }, // 19:34 close · P/L +1.43
+      { date: '2026-07-23', type: 'sell', ticker: 'MSTR', shares: 0.02519351, price: 94.0718,  commission: 0 }, // 19:34 close · P/L +0.03
+      { date: '2026-07-23', type: 'buy',  ticker: 'SNDK', shares: 0.05789723, price: 1668.819, commission: 0 }, // 19:37
+      { date: '2026-07-23', type: 'sell', ticker: 'SNDK', shares: 0.05789723, price: 1672.9643, commission: 0 }, // 19:47 · P/L +0.24
+      { date: '2026-07-23', type: 'buy',  ticker: 'HIMS', shares: 2.00000000, price: 34.575,   commission: 0 }, // 19:48
+      { date: '2026-07-23', type: 'buy',  ticker: 'HIMS', shares: 0.80150285, price: 34.5726,  commission: 0 }, // 19:48
+      { date: '2026-07-23', type: 'sell', ticker: 'HIMS', shares: 2.00000000, price: 34.685,   commission: 0 }, // 19:49 · P/L +0.22
+      { date: '2026-07-23', type: 'sell', ticker: 'HIMS', shares: 0.80150285, price: 34.6848,  commission: 0 }, // 19:49 · P/L +0.09
+      { date: '2026-07-23', type: 'buy',  ticker: 'HIMS', shares: 2.00000000, price: 34.315,   commission: 0 }, // 19:51
+      { date: '2026-07-23', type: 'buy',  ticker: 'HIMS', shares: 0.83187955, price: 34.3079,  commission: 0 }, // 19:51
+      { date: '2026-07-23', type: 'sell', ticker: 'HIMS', shares: 2.00000000, price: 33.345,   commission: 0 }, // 20:19 · P/L −1.94
+      { date: '2026-07-23', type: 'sell', ticker: 'HIMS', shares: 0.83187955, price: 33.3462,  commission: 0 }, // 20:19 · P/L −0.80
+      { date: '2026-07-23', type: 'buy',  ticker: 'SNDK', shares: 0.05694973, price: 1658.129, commission: 0 }, // 20:37 open (held)
       { date: '2026-07-23', type: 'deposit', amount: 9.44 },
       { date: '2026-07-23', type: 'sell', ticker: 'WQTM', shares: 0.68379924, price: 31.37, commission: 0 },
       { date: '2026-07-23', type: 'sell', ticker: 'WQTM', shares: 1.00000000, price: 31.36, commission: 0 },
@@ -110,12 +183,20 @@ window.PORTFOLIOS = {
       { ticker: 'ARCC', name: 'Ares Capital Corporation', shares: 2.27151778, avgBuy: 18.47, invested: 41.96, value: 41.96, color: '#1d4ed8', divYield: 10.40 },
       { ticker: 'MAIN', name: 'Main Street Capital Corporation', shares: 3.597, avgBuy: 53.51, invested: 192.48, value: 192.48, color: '#15803d', divYield: 6.20 },
       { ticker: 'BXSL', name: 'Blackstone Secured Lending Fund', shares: 3.09841001, avgBuy: 23.35, invested: 72.34, value: 72.34, color: '#7c3aed', divYield: 12.90 },
-      { ticker: 'LYG', name: 'Lloyds Banking Group plc', shares: 34.764, avgBuy: 6.05, invested: 210.32, value: 210.32, color: '#006a4d', divYield: 3.66 },
+      { ticker: 'LYG', name: 'Lloyds Banking Group plc', shares: 39.60600954, avgBuy: 6.07, invested: 240.23, value: 240.23, color: '#006a4d', divYield: 3.66 },
       { ticker: 'VOO', name: 'Vanguard S&P 500 ETF', shares: 0.515, avgBuy: 681.96, invested: 351.21, value: 351.21, color: '#2563eb', divYield: 1.30 },
-      { ticker: 'GOOG', name: 'Alphabet Inc.', shares: 0.969, avgBuy: 320.77, invested: 310.83, value: 310.83, color: '#ea4335', divYield: 0.00 },
+      { ticker: 'GOOG', name: 'Alphabet Inc.', shares: 0.88410344, avgBuy: 320.77, invested: 283.59, value: 283.59, color: '#ea4335', divYield: 0.00 },
     ],
-    cash: 0.02,
+    cash: 17.82, // 07 Aug 2026: EGGY position fully liquidated @ $17.82 -> net cash $17.82
     transactions: [
+      // --- 07 აგვ 2026 EGGY liquidation · TBC app · net cash $17.82 ---
+      { date: '2026-08-07', type: 'sell', ticker: 'EGGY', shares: 0.52795069, price: 33.753155, commission: 0 },
+      // --- 31 Jul 2026 transactions · TBC app ---
+      { date: '2026-07-31', type: 'buy',     ticker: 'LYG',  shares: 0.84200954, price: 6.1638, commission: 0.09 },
+      { date: '2026-07-31', type: 'buy',     ticker: 'LYG',  shares: 4.00000000, price: 6.1575, commission: 0 },
+      { date: '2026-07-31', type: 'sell',    ticker: 'GOOG', shares: 0.08489656, price: 353.3712, commission: 0.09 },
+      { date: '2026-07-31', type: 'buy',     ticker: 'EGGY', shares: 0.52795069, price: 32.5788, commission: 0.05 },
+      { date: '2026-07-31', type: 'deposit', amount: 17.25 },
       { date: '2026-07-23', type: 'deposit', amount: 1140.00, note: 'გადმოტანა ← BOG' },
       { date: '2026-07-23', type: 'buy', ticker: 'GOOG', shares: 0.96900000, price: 320.77, commission: 0.68 },
       { date: '2026-07-23', type: 'buy', ticker: 'VOO', shares: 0.51500000, price: 681.96, commission: 0.68 },

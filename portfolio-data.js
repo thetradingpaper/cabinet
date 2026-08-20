@@ -5,17 +5,16 @@
 // Last updated: 2026-08-05
 // ============================================================
 window.MEPORTF = {
-  lastUpdated: '2026-08-07',
-  feesPaid: 75.34,                      // reconciled 04 Aug 2026: BOG $31.71 ($19.71 + $12 bank fee) + TBC $3.63 + Galt $40.00
+  lastUpdated: '2026-08-20',
+  feesPaid: 84.80,                      // reconciled 19 Aug 2026: BOG $40.12 ($19.71 + $20 bank fees + $0.41 platform fee) + TBC $4.68 (12 fees) + Galt $40.00
   feesByBook: [
-    { book: 'BOG', amount: 31.71, note: '30 საკომისიო ($19.71) + ბანკის გადარიცხვის საკომისიო ($12.00)' },
-    { book: 'TBC', amount: 3.63, note: '8 ვაჭრობის საკომისიო (31 ივლ 2026)' },
+    { book: 'BOG', amount: 40.12, note: '30 საკომისიო ($19.71) + ბანკის გადარიცხვის საკომისიო ($20.00) + პლატფორმის საკომისიო ($0.41)' },
+    { book: 'TBC', amount: 4.68, note: '12 ვაჭრობის საკომისიო (17 აგვ 2026)' },
     { book: 'Galt & Taggart', amount: 40, note: '4 × $10' },
   ],
   marginFinancingEst: 0,
-  // BOG uninvested cash for the meportfolio page (index.html sets
-  // portfolios.bog.cash = cashAdded). 07 Aug 2026: SNXX position closed -> cash balance $673.89.
-  bog: { cashAdded: 673.89, countedAsDeposit: false },
+  // BOG cash balance: 19 Aug 2026: $4.41 deposit added - $0.41 platform fee -> net cash balance $4.00.
+  bog: { cashAdded: 4.41, countedAsDeposit: true },
   galt: {
     closed: true,
     statusShort: 'დახურულია უვადო დროით',
@@ -33,6 +32,7 @@ window.MEPORTF = {
     ],
   },
   transfers: [
+    { date: '17 აგვ 2026', from: 'BOG', to: 'TBC', type: 'გადატანა', amount: 400.00 },
     { date: '23 ივლ 2026', from: 'BOG', to: 'TBC', type: 'გადატანა', amount: 1140.00 },
     { date: '09 ივლ 2026', from: 'BOG', to: 'TBC', type: 'გადატანა', amount: 102.00 },
     { date: '24 ივნ 2026', from: 'Galt & Taggart', to: 'BOG', type: 'გატანა · გადატანა', amount: 211.37 },

@@ -15,11 +15,49 @@ window.PORTFOLIOS = {
     startDate: '2025-12-09',
     annualGoalPct: 35,
     holdings: [],
-    cash: 673.89, // 07 Aug 2026: SNXX position closed @ $673.89 -> net cash in BOG $673.89
-    priorDeposits: 997.66,
+    cash: 4.00, // 19 Aug 2026: New deposit $4.41 - $0.41 platform fee -> net cash balance $4.00
+    previousValue: 671.08, // 11 Aug 2026 value prior to closing SMCZ position
+    priorDeposits: 2297.66, // $997.66 base + $1,300.00 historical lost BOG bank deposits
     priorCostBasis: 1007.05,
     transactions: [
       // Newest first
+      // --- 19 აგვ 2026 BOG new deposit ($4.41) & platform fee ($0.41) · net cash $4.00 ---
+      { date: '2026-08-19', type: 'fee',      amount: 0.41,   note: 'პლატფორმის მომსახურების საკომისიო (BOG)' },
+      { date: '2026-08-19', type: 'deposit',  amount: 4.41,   note: 'ახალი დეპოზიტი (CASH)' },
+      // --- 17 აგვ 2026 BOG fully cleared · $400 → TBC ($4 bank fee), $214.82 withdrawn · BOG app · net cash $0.00 ---
+      { date: '2026-08-17', type: 'withdraw', amount: 214.82, note: 'BOG ანგარიშის სრული დახურვა · გატანა' },
+      { date: '2026-08-17', type: 'fee',      amount: 4.00,   note: 'ბანკის საკომისიო · გადარიცხვა $250 TBC-ში' },
+      { date: '2026-08-17', type: 'fee',      amount: 4.00,   note: 'ბანკის საკომისიო · გადარიცხვა BOG→TBC' },
+      { date: '2026-08-17', type: 'deposit',  amount: -400.00, note: 'გადატანა → TBC' },
+      { date: '2026-08-14', type: 'sell', ticker: 'SNDK', shares: 0.35000000, price: 1659.4857, commission: 0 },
+      { date: '2026-08-14', type: 'buy',  ticker: 'SNDK', shares: 0.35000000, price: 1600.00,    commission: 0 },
+      { date: '2026-08-14', type: 'sell', ticker: 'CRWV', shares: 0.93720800, price: 113.6353,   commission: 0 },
+      { date: '2026-08-14', type: 'sell', ticker: 'AMD',  shares: 0.20521711, price: 518.9626,   commission: 0 },
+      { date: '2026-08-14', type: 'sell', ticker: 'NBIS', shares: 0.40464532, price: 263.1930,   commission: 0 },
+      { date: '2026-08-14', type: 'sell', ticker: 'SNDK', shares: 0.08041847, price: 1461.3551,  commission: 0 },
+      { date: '2026-08-14', type: 'sell', ticker: 'SMCI', shares: 4.09108811, price: 39.3584,    commission: 0 },
+      // --- 13 აგვ 2026 BOG deposit ($51.00) & SMCI purchases (1.28671554 sh total) · BOG app · net cash $0.00 ---
+      { date: '2026-08-13', type: 'buy',  ticker: 'SMCI', shares: 0.28671554, price: 39.6211843, commission: 0 },
+      { date: '2026-08-13', type: 'buy',  ticker: 'SMCI', shares: 1.00000000, price: 39.64,      commission: 0 },
+      { date: '2026-08-13', type: 'deposit', amount: 51.00 },
+      // --- 12 აგვ 2026 BOG 5-stock reinvestment (SMCI, SNDK, NBIS, AMD, CRWV) · BOG app · $510.40 total invested · net cash $0.00 ---
+      { date: '2026-08-12', type: 'buy',  ticker: 'CRWV', shares: 0.93720800, price: 106.70, commission: 0 },
+      { date: '2026-08-12', type: 'buy',  ticker: 'AMD',  shares: 0.20521711, price: 487.29, commission: 0 },
+      { date: '2026-08-12', type: 'buy',  ticker: 'NBIS', shares: 0.40464532, price: 247.13, commission: 0 },
+      { date: '2026-08-12', type: 'buy',  ticker: 'SNDK', shares: 0.08041847, price: 1372.82, commission: 0 },
+      { date: '2026-08-12', type: 'buy',  ticker: 'SMCI', shares: 2.80437257, price: 35.66,  commission: 0 },
+      // --- 12 აგვ 2026 BOG SMCZ (2X Short SMCI ETF) closed · BOG app · proceeds $510.40 · net cash $510.40 ---
+      { date: '2026-08-12', type: 'sell', ticker: 'SMCZ', shares: 118.14776384, price: 4.32001557, commission: 0 },
+      // --- 11 აგვ 2026 BOG SMCZ (2X Short SMCI ETF) purchase · BOG app · $671.80 invested · holding overnight ---
+      { date: '2026-08-11', type: 'buy',  ticker: 'SMCZ', shares: 118.14776384, price: 5.68608405, commission: 0 },
+      // --- 11 აგვ 2026 BOG 2X ETF positions closed & intraday trading · BOG app · net cash $666.28 ---
+      { date: '2026-08-11', type: 'sell', ticker: 'RKLZ', shares: 76.99477619, price: 2.94, commission: 0 },
+      { date: '2026-08-11', type: 'sell', ticker: 'SPCG', shares: 10.12658227, price: 19.70, commission: 0 },
+      { date: '2026-08-11', type: 'sell', ticker: 'SNXX', shares: 21.09971726, price: 9.45, commission: 0 },
+      // --- 10 აგვ 2026 BOG 2X leveraged ETF purchases (SNXX, SPCG, RKLZ) · BOG app · net cash $48.38 ---
+      { date: '2026-08-10', type: 'buy',  ticker: 'RKLZ', shares: 76.99477619, price: 2.9289, commission: 0 },
+      { date: '2026-08-10', type: 'buy',  ticker: 'SPCG', shares: 10.12658227, price: 19.7500, commission: 0 },
+      { date: '2026-08-10', type: 'buy',  ticker: 'SNXX', shares: 21.09971726, price: 9.4788, commission: 0 },
       // --- 07 აგვ 2026 BOG SNXX round-trip scalp · BOG app · net cash $673.89 ---
       { date: '2026-08-07', type: 'sell', ticker: 'SNXX', shares: 72.21708957, price: 9.33144815, commission: 0 },
       { date: '2026-08-07', type: 'buy',  ticker: 'SNXX', shares: 72.21708957, price: 9.30860857, commission: 0 },
@@ -179,16 +217,37 @@ window.PORTFOLIOS = {
     startDate: '2026-05-12',
     annualGoalPct: null,
     holdings: [
-      { ticker: 'MSTR', name: 'Strategy Inc', shares: 3.686, avgBuy: 133.82, invested: 493.26, value: 493.26, color: '#1a1a1a', divYield: 0.00 },
-      { ticker: 'ARCC', name: 'Ares Capital Corporation', shares: 2.27151778, avgBuy: 18.47, invested: 41.96, value: 41.96, color: '#1d4ed8', divYield: 10.40 },
-      { ticker: 'MAIN', name: 'Main Street Capital Corporation', shares: 3.597, avgBuy: 53.51, invested: 192.48, value: 192.48, color: '#15803d', divYield: 6.20 },
-      { ticker: 'BXSL', name: 'Blackstone Secured Lending Fund', shares: 3.09841001, avgBuy: 23.35, invested: 72.34, value: 72.34, color: '#7c3aed', divYield: 12.90 },
-      { ticker: 'LYG', name: 'Lloyds Banking Group plc', shares: 39.60600954, avgBuy: 6.07, invested: 240.23, value: 240.23, color: '#006a4d', divYield: 3.66 },
-      { ticker: 'VOO', name: 'Vanguard S&P 500 ETF', shares: 0.515, avgBuy: 681.96, invested: 351.21, value: 351.21, color: '#2563eb', divYield: 1.30 },
-      { ticker: 'GOOG', name: 'Alphabet Inc.', shares: 0.88410344, avgBuy: 320.77, invested: 283.59, value: 283.59, color: '#ea4335', divYield: 0.00 },
+      { ticker: 'MSTR', name: 'Strategy Inc', shares: 4.53029502, avgBuy: 126.62, invested: 573.62, value: 442.05, color: '#1a1a1a', divYield: 0.00 },
+      { ticker: 'ARCC', name: 'Ares Capital Corporation', shares: 2.27151778, avgBuy: 18.47, invested: 41.96, value: 44.73, color: '#1d4ed8', divYield: 10.40 },
+      { ticker: 'MAIN', name: 'Main Street Capital Corporation', shares: 3.597, avgBuy: 53.51, invested: 192.48, value: 211.05, color: '#15803d', divYield: 6.20 },
+      { ticker: 'BXSL', name: 'Blackstone Secured Lending Fund', shares: 3.09841001, avgBuy: 23.35, invested: 72.34, value: 75.45, color: '#7c3aed', divYield: 12.90 },
+      { ticker: 'LYG', name: 'Lloyds Banking Group plc', shares: 39.60600954, avgBuy: 6.07, invested: 240.23, value: 245.16, color: '#006a4d', divYield: 3.66 },
+      { ticker: 'VOO', name: 'Vanguard S&P 500 ETF', shares: 1.00686969, avgBuy: 696.35, invested: 701.13, value: 717.23, color: '#2563eb', divYield: 1.30 },
+      { ticker: 'GOOG', name: 'Alphabet Inc. - Class C Shares', shares: 0.58494925, avgBuy: 341.91, invested: 200.00, value: 199.12, color: '#0f9d58', divYield: 0.00 },
+      { ticker: 'KO',   name: 'Coca-Cola Company, The', shares: 2.28860792, avgBuy: 87.13, invested: 199.40, value: 199.04, color: '#dc2626', divYield: 3.10 },
+      { ticker: 'DIVO', name: 'Amplify CWP Enhanced Dividend ETF', shares: 3.11960181, avgBuy: 48.59, invested: 151.58, value: 151.58, color: '#0284c7', divYield: 4.50 },
     ],
-    cash: 17.82, // 07 Aug 2026: EGGY position fully liquidated @ $17.82 -> net cash $17.82
+    cash: 0.00, // 17 Aug 2026: $400 + $250 deposits invested into MSTR, VOO, GOOG, DIVO, KO ($199.40 + $0.60 fee), DIVO ($149.85 + $0.15 fee) -> net cash $0.00
+    priorDeposits: 2215.00, // $2,215.00 historical lost TBC bank deposits
+    priorCostBasis: 0.00,
     transactions: [
+      // --- 17 აგვ 2026 TBC $250 deposit & purchases (DIVO, KO) · TBC app · net cash $0.00 ---
+      { date: '2026-08-17', type: 'buy',     ticker: 'DIVO', shares: 0.02850092, price: 48.42,  commission: 0.15 },
+      { date: '2026-08-17', type: 'buy',     ticker: 'DIVO', shares: 1.00000000, price: 48.47,  commission: 0 },
+      { date: '2026-08-17', type: 'buy',     ticker: 'KO',   shares: 0.28860792, price: 87.14,  commission: 0.60 },
+      { date: '2026-08-17', type: 'buy',     ticker: 'KO',   shares: 2.00000000, price: 87.125, commission: 0 },
+      { date: '2026-08-17', type: 'deposit', amount: 250.00 },
+      // --- 17 აგვ 2026 BOG→TBC transfer ($400.00) & purchases (DIVO, GOOG, VOO, MSTR) · TBC app · net cash $0.00 ---
+      { date: '2026-08-17', type: 'buy',     ticker: 'DIVO', shares: 2.09110089, price: 47.82,  commission: 0 },
+      { date: '2026-08-17', type: 'buy',     ticker: 'GOOG', shares: 0.58494925, price: 341.91,  commission: 0 },
+      { date: '2026-08-17', type: 'buy',     ticker: 'VOO',  shares: 0.02806820, price: 712.55,  commission: 0.06 },
+      { date: '2026-08-17', type: 'buy',     ticker: 'MSTR', shares: 0.84429502, price: 95.18,   commission: 0.24 },
+      { date: '2026-08-17', type: 'deposit', amount: 400.00, note: 'გადმოტანა ← BOG' },
+      // --- 14 აგვ 2026 MAIN dividend · TBC app · net cash $0.66 ---
+      { date: '2026-08-14', type: 'dividend', ticker: 'MAIN', amount: 0.66, note: 'დივიდენდის ჩარიცხვა $0.95 − გადასახადი $0.29 = წმინდა $0.66' },
+      // --- 10 აგვ 2026 GOOG liquidation → VOO buy · TBC app · net cash $0.00 ---
+      { date: '2026-08-10', type: 'buy',  ticker: 'VOO',  shares: 0.46380149, price: 711.3388, commission: 0 },
+      { date: '2026-08-10', type: 'sell', ticker: 'GOOG', shares: 0.88443382, price: 352.8805, commission: 0 },
       // --- 07 აგვ 2026 EGGY liquidation · TBC app · net cash $17.82 ---
       { date: '2026-08-07', type: 'sell', ticker: 'EGGY', shares: 0.52795069, price: 33.753155, commission: 0 },
       // --- 31 Jul 2026 transactions · TBC app ---

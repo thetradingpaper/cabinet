@@ -15,24 +15,45 @@ window.PORTFOLIOS = {
     startDate: '2025-12-09',
     annualGoalPct: 35,
     holdings: [
-      { ticker: 'QBTS', name: 'D-Wave Quantum Inc',           shares: 5.53863195, avgBuy: 18.06,  invested: 100.00, value: 100.00, color: '#a855f7', divYield: 0.00 },
-      { ticker: 'NVTS', name: 'Navitas Semiconductor Corp', shares: 1.19821705, avgBuy: 12.52,  invested: 15.00,  value: 15.00,  color: '#06b6d4', divYield: 0.00 },
-      { ticker: 'BE',   name: 'Bloom Energy Corp',            shares: 0.06874464, avgBuy: 218.20, invested: 15.00,  value: 15.00,  color: '#84cc16', divYield: 0.00 },
-      { ticker: 'SOXX', name: 'iShares Semiconductor ETF',    shares: 0.02880467, avgBuy: 520.75, invested: 15.00,  value: 15.00,  color: '#0f766e', divYield: 0.70 },
-      { ticker: 'NVDA', name: 'NVIDIA Corporation',          shares: 0.02220260, avgBuy: 225.20, invested: 5.00,   value: 5.00,   color: '#76b900', divYield: 0.03 },
-      { ticker: 'SMH',  name: 'VanEck Semiconductor ETF',     shares: 0.02845432, avgBuy: 567.23, invested: 16.14,  value: 16.11,  color: '#0284c7', divYield: 0.80 },
-      { ticker: 'VRT',  name: 'Vertiv Holdings Co',           shares: 0.04262412, avgBuy: 262.53, invested: 11.19,  value: 11.20,  color: '#16a34a', divYield: 0.10 },
-      { ticker: 'RKLB', name: 'Rocket Lab USA Inc',           shares: 0.16446193, avgBuy: 66.88,  invested: 11.00,  value: 10.95,  color: '#e11d48', divYield: 0.00 },
-      { ticker: 'MU',   name: 'Micron Technology Inc',        shares: 0.01210279, avgBuy: 908.88, invested: 11.00,  value: 11.01,  color: '#8b5cf6', divYield: 0.50 },
-      { ticker: 'MRVL', name: 'Marvell Technology Group Ltd', shares: 0.02557930, avgBuy: 243.17, invested: 6.22,   value: 6.16,   color: '#2563eb', divYield: 0.00 },
-      { ticker: 'SNDK', name: 'SanDisk Corp',                 shares: 0.00744074, avgBuy: 1478.35,invested: 11.00,  value: 10.94,  color: '#dc2626', divYield: 0.00 },
+      { ticker: 'QBTS', name: 'D-Wave Quantum Inc',           shares: 3.63128540, avgBuy: 18.06,  invested: 65.56,  value: 65.56,  color: '#a855f7', divYield: 0.00 },
     ],
-    cash: 0.00, // 27 Aug 2026: Added $210.22 deposit & fully invested in 12 stock/ETF buys -> net cash balance $0.00
+    cash: 0.00, // 14 Sep 2026: all non-QBTS positions liquidated ($123.07) & withdrawn to card -> net cash balance $0.00
     previousValue: 671.08, // 11 Aug 2026 value prior to closing SMCZ position
     priorDeposits: 2297.66, // $997.66 base + $1,300.00 historical lost BOG bank deposits
     priorCostBasis: 1007.05,
     transactions: [
       // Newest first
+      // --- 14 სექ 2026 BOG: თანხის გატანა ($123.07) · ყველა პოზიციის დახურვა (MRVL, RKLB, SOXX, NVTS) · net cash $0.00 ---
+      { date: '2026-09-14', type: 'withdraw', amount: 123.07, note: 'ბარათზე გატანა · პოზიციების ლიკვიდაცია (MRVL, RKLB, SOXX, NVTS)' },
+      // --- 11 სექ 2026 BOG: VRT liquidation → MRVL buy ($10.95) & full liquidation (MRVL, RKLB, SOXX, NVTS: $123.07) · BOG app ---
+      { date: '2026-09-11', type: 'sell',    ticker: 'NVTS', shares: 0.19821705, price: 11.7043, commission: 0 },
+      { date: '2026-09-11', type: 'sell',    ticker: 'NVTS', shares: 1.00000000, price: 11.70,   commission: 0 },
+      { date: '2026-09-11', type: 'sell',    ticker: 'SOXX', shares: 0.08088363, price: 529.2789, commission: 0 },
+      { date: '2026-09-11', type: 'sell',    ticker: 'RKLB', shares: 0.24470449, price: 64.0364,  commission: 0 },
+      { date: '2026-09-11', type: 'sell',    ticker: 'MRVL', shares: 0.21153451, price: 239.0626, commission: 0 },
+      { date: '2026-09-11', type: 'buy',     ticker: 'MRVL', shares: 0.04619107, price: 237.0588, commission: 0 },
+      { date: '2026-09-11', type: 'sell',    ticker: 'VRT',  shares: 0.04262412, price: 256.8973, commission: 0 },
+      // --- 10 სექ 2026 BOG: MU liquidation → SOXX buy ($12.06) · BOG app · net cash $0.00 ---
+      { date: '2026-09-10', type: 'buy',     ticker: 'SOXX', shares: 0.02316785, price: 520.5490, commission: 0 },
+      { date: '2026-09-10', type: 'sell',    ticker: 'MU',   shares: 0.01210279, price: 996.4645, commission: 0 },
+      // --- 09 სექ 2026 BOG: თანხის გატანა ($54.29) · SMH & BE liquidation → MRVL & SOXX ($35.42) · net cash $0.00 ---
+      { date: '2026-09-09', type: 'buy',     ticker: 'MRVL', shares: 0.08410471, price: 237.7988, commission: 0 },
+      { date: '2026-09-09', type: 'buy',     ticker: 'SOXX', shares: 0.02891111, price: 533.3590, commission: 0 },
+      { date: '2026-09-09', type: 'sell',    ticker: 'SMH',  shares: 0.02845432, price: 576.0109, commission: 0 },
+      { date: '2026-09-09', type: 'sell',    ticker: 'BE',   shares: 0.06874464, price: 276.8216, commission: 0 },
+      { date: '2026-09-09', type: 'withdraw', amount: 19.29, note: 'ბარათზე გატანა · დეპოზიტის დაბრუნება' },
+      { date: '2026-09-09', type: 'withdraw', amount: 35.00, note: 'ბარათზე გატანა · QBTS გაყიდვის თანხა' },
+      // --- 08 სექ 2026 BOG: QBTS გაყიდვა ($35.00) · BOG app ---
+      { date: '2026-09-08', type: 'sell',    ticker: 'QBTS', shares: 0.90734655, price: 18.3502, commission: 0 },
+      { date: '2026-09-08', type: 'sell',    ticker: 'QBTS', shares: 1.00000000, price: 18.35,   commission: 0 },
+      // --- 07 სექ 2026 BOG ახალი დეპოზიტი ($19.29) ---
+      { date: '2026-09-07', type: 'deposit', amount: 19.29, note: 'ახალი დეპოზიტი ($19.29)' },
+      // --- 03 სექ 2026 BOG rotation: NVDA liquidation → RKLB buy · BOG app · net cash $0.00 ---
+      { date: '2026-09-03', type: 'buy',     ticker: 'RKLB', shares: 0.08024256, price: 63.0588,  commission: 0 },
+      { date: '2026-09-03', type: 'sell',    ticker: 'NVDA', shares: 0.02220260, price: 227.9012, commission: 0 },
+      // --- 02 სექ 2026 BOG rotation: SNDK liquidation → MRVL buy · BOG app · net cash $0.00 ---
+      { date: '2026-09-02', type: 'buy',     ticker: 'MRVL', shares: 0.05565943, price: 205.8950, commission: 0 },
+      { date: '2026-09-02', type: 'sell',    ticker: 'SNDK', shares: 0.00744074, price: 1540.1694, commission: 0 },
       // --- 27 აგვ 2026 BOG $210.22 deposit & 12 purchases · BOG app · net cash $0.00 ---
       { date: '2026-08-27', type: 'buy',     ticker: 'QBTS', shares: 0.53863195, price: 18.05,   commission: 0 },
       { date: '2026-08-27', type: 'buy',     ticker: 'QBTS', shares: 5.00000000, price: 18.056,  commission: 0 },
@@ -249,7 +270,7 @@ window.PORTFOLIOS = {
     startDate: '2026-05-12',
     annualGoalPct: null,
     holdings: [
-      { ticker: 'MSTR', name: 'Strategy Inc', shares: 6.15510135, avgBuy: 125.66, invested: 773.47, value: 754.80, color: '#1a1a1a', divYield: 0.00 },
+      { ticker: 'MSTR', name: 'Strategy Inc', shares: 6.15861531, avgBuy: 125.66, invested: 773.90, value: 755.23, color: '#1a1a1a', divYield: 0.00 },
       { ticker: 'ARCC', name: 'Ares Capital Corporation', shares: 2.27151778, avgBuy: 18.47, invested: 41.96, value: 44.73, color: '#1d4ed8', divYield: 10.40 },
       { ticker: 'MAIN', name: 'Main Street Capital Corporation', shares: 3.597, avgBuy: 53.51, invested: 192.48, value: 211.05, color: '#15803d', divYield: 6.20 },
       { ticker: 'BXSL', name: 'Blackstone Secured Lending Fund', shares: 3.09841001, avgBuy: 23.35, invested: 72.34, value: 75.45, color: '#7c3aed', divYield: 12.90 },
@@ -258,7 +279,7 @@ window.PORTFOLIOS = {
       { ticker: 'KO',   name: 'Coca-Cola Company, The', shares: 2.28860792, avgBuy: 87.13, invested: 199.40, value: 199.04, color: '#dc2626', divYield: 3.10 },
       { ticker: 'DIVO', name: 'Amplify CWP Enhanced Dividend ETF', shares: 3.11960181, avgBuy: 48.59, invested: 151.58, value: 151.58, color: '#0284c7', divYield: 4.50 },
     ],
-    cash: 0.00, // 25 Aug 2026: GOOG sold ($200.45 -$0.60 fee) & fully reinvested into MSTR ($126.50 + $72.75 -$0.60 fee) -> net cash $0.00
+    cash: 0.00, // 02 Sep 2026: DIVO dividend ($0.43) fully reinvested into MSTR (0.00351396 sh) -> net cash $0.00
     priorDeposits: 2215.00, // $2,215.00 historical lost TBC bank deposits
     priorCostBasis: 0.00,
     transactions: [
@@ -267,6 +288,10 @@ window.PORTFOLIOS = {
       //   { date: '2026-08-15', type: 'dividend', ticker: 'MAIN', amount: 0.62, note: 'monthly · net after 30% GE' },
       // Add one row per real credit from the TBC statement. Never estimate — the
       // upcoming calendar projects estimates; this array holds actual receipts only.
+      // --- 02 სექ 2026 MSTR purchase from DIVO dividend ($0.43) · TBC app · net cash $0.00 ---
+      { date: '2026-09-02', type: 'buy',     ticker: 'MSTR', shares: 0.00351396, price: 122.37,   commission: 0 },
+      // --- 31 აგვ 2026 DIVO dividend · TBC app · net cash $0.43 ---
+      { date: '2026-08-31', type: 'dividend', ticker: 'DIVO', amount: 0.43, note: 'დივიდენდის ჩარიცხვა $0.61 − გადასახადი $0.18 = წმინდა $0.43' },
       // --- 25 აგვ 2026 TBC GOOG liquidation → MSTR purchases ($126.50 + $72.75) · TBC app · net cash $0.00 ---
       { date: '2026-08-25', type: 'buy',     ticker: 'MSTR', shares: 0.59324798, price: 122.63,   commission: 0.22 },
       { date: '2026-08-25', type: 'buy',     ticker: 'MSTR', shares: 1.03155835, price: 122.63,   commission: 0.38 },

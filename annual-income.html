@@ -6,9 +6,9 @@
 <title>წლიური შემოსავალი · The Trading Paper</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;600;800&family=Noto+Serif+Georgian:wght@700;900&display=swap" rel="stylesheet">
-<script src="js/portfolios.data.js"></script>
-<script src="portfolio-data.js"></script>
-<script src="js/portfolios.js"></script>
+<script src="js/portfolios.data.js?v=20260819"></script>
+<script src="portfolio-data.js?v=20260819"></script>
+<script src="js/portfolios.js?v=20260819"></script>
 <script src="js/dividends.data.js"></script>
 <style>
   :root{ --bg:#fffdf7; --paper:#fff; --ink:#1a1a1a; --muted:#6b6b6b; --line:#e6e0d4; --red:#b91c1c; --green:#166534; }
@@ -64,6 +64,9 @@
   </table>
 
   <div class="foot">© 2026 The Trading Paper · საპროგნოზო · ფასების ცვლილებით იცვლება · ეს არ არის ფინანსური რჩევა</div>
+  <div class="no-print" style="text-align:center;margin-top:20px;">
+    <button onclick="window.print()" style="padding:10px 26px;background:var(--ink,#1a1a1a);color:#fff;border:none;font-size:13px;letter-spacing:2px;cursor:pointer;text-transform:uppercase;font-family:'Noto Sans Georgian',sans-serif;border-radius:4px;">🖨️ ამობეჭდვა / Save as PDF</button>
+  </div>
 </div>
 
 <script>
@@ -73,12 +76,31 @@
   var bookColors = { bog:'#b91c1c', tbc:'#1a1a1a', galt:'#8b6914' };
   var TAX = 0.70; // net after 30% GE withholding
 
+  var divMeta = (window.TP_DIVIDENDS && window.TP_DIVIDENDS.DIV_META) ? window.TP_DIVIDENDS.DIV_META : {
+    MAIN: { estDivPerShare: 0.265, freq: 'monthly', supplementalPerShare: 0.30, supplementalMonths: [2, 5, 8, 11] },
+    ARCC: { estDivPerShare: 0.48, freq: 'quarterly' },
+    BXSL: { estDivPerShare: 0.77, freq: 'quarterly' },
+    LYG:  { estDivPerShare: 0.11, freq: 'semi-annual' },
+    VOO:  { estDivPerShare: 1.962, freq: 'quarterly' },
+    KO:   { estDivPerShare: 0.53, freq: 'quarterly' },
+    DIVO: { estDivPerShare: 0.1834, freq: 'monthly' }
+  };
   var rows=[], grossTot=0, valTot=0;
   ['bog','tbc','galt'].forEach(function(k){
     var p=P[k]; if(!p||!p.holdings) return;
     p.holdings.forEach(function(h){
       valTot += (+h.value||0);
-      if(typeof h.divYield==='number' && h.divYield>0){
+      var meta = divMeta[h.ticker];
+      if (meta && meta.estDivPerShare) {
+        var freqMult = (meta.freq === 'monthly') ? 12 : (meta.freq === 'semi-annual') ? 2 : 4;
+        var gross = (+h.shares || 0) * meta.estDivPerShare * freqMult;
+        if (meta.supplementalPerShare && meta.supplementalMonths) {
+          gross += (+h.shares || 0) * meta.supplementalPerShare * meta.supplementalMonths.length;
+        }
+        grossTot += gross;
+        var yld = h.value > 0 ? (gross / h.value * 100) : (h.divYield || 0);
+        rows.push({ticker:h.ticker, book:k, bookName:p.name||k.toUpperCase(), value:+h.value||0, yld:yld, gross:gross, net:gross*TAX});
+      } else if (typeof h.divYield==='number' && h.divYield>0){
         var gross=(+h.value||0)*(h.divYield/100);
         grossTot += gross;
         rows.push({ticker:h.ticker, book:k, bookName:p.name||k.toUpperCase(), value:+h.value||0, yld:h.divYield, gross:gross, net:gross*TAX});

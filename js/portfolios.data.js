@@ -15,16 +15,27 @@ window.PORTFOLIOS = {
     startDate: '2025-12-09',
     annualGoalPct: 35,
     holdings: [
-      { ticker: 'MRVL', name: 'Marvell Technology Group Ltd', shares: 0.36656093, avgBuy: 272.81, invested: 100.00, value: 100.00, color: '#2563eb', divYield: 0.00 },
-      { ticker: 'SNDK', name: 'SanDisk Corp',                 shares: 0.17144826, avgBuy: 1632.62, invested: 279.91, value: 274.58, color: '#dc2626', divYield: 0.00 },
+      { ticker: 'MRVL', name: 'Marvell Technology Group Ltd', shares: 0.40613373, avgBuy: 270.85, invested: 110.00, value: 110.00, color: '#2563eb', divYield: 0.00 },
+      { ticker: 'SNDK', name: 'SanDisk Corp',                 shares: 0.18992750, avgBuy: 1606.19, invested: 305.06, value: 305.06, color: '#dc2626', divYield: 0.00 },
+      { ticker: 'MSTR', name: 'Strategy Inc.',                shares: 0.26954407, avgBuy: 140.98, invested: 38.00, value: 38.00, color: '#ea580c', divYield: 0.00 },
       { ticker: 'VRT',  name: 'Vertiv Holdings Co',           shares: 0.36378133, avgBuy: 248.23, invested: 90.30, value: 90.30, color: '#16a34a', divYield: 0.00 },
     ],
-    cash: 0.00, // 12 Oct 2026: deposit $75.00 -> buy SNDK ($75.00) -> net cash $0.00
+    cash: 0.00, // 28 Oct 2026: deposits $65.00 -> buy SNDK $17 + MRVL $10 + MSTR $38 -> net cash $0.00
     previousValue: 0.00, // all positions closed & cash withdrawn on 17 Sep 2026
     priorDeposits: 997.66, // base deposits before the transaction log (old lost bank deposits $1,300.00 removed 05 Oct 2026)
     priorCostBasis: 1007.05,
     transactions: [
       // Newest first
+      // --- 28 ოქტ 2026 BOG $65.00 deposits & 3 purchases (SNDK, MRVL, MSTR · FULL fill) · BOG app · 19:43–20:23 · net cash $0.00 ---
+      { date: '2026-10-28', type: 'buy',     ticker: 'MSTR', shares: 0.26954407, price: 140.9788, commission: 0 },
+      { date: '2026-10-28', type: 'deposit', amount: 38.00, note: 'ახალი დეპოზიტი ($38.00)' },
+      { date: '2026-10-28', type: 'buy',     ticker: 'MRVL', shares: 0.03957280, price: 252.6988, commission: 0 },
+      { date: '2026-10-28', type: 'deposit', amount: 10.00, note: 'ახალი დეპოზიტი ($10.00)' },
+      { date: '2026-10-28', type: 'buy',     ticker: 'SNDK', shares: 0.01207533, price: 1407.8288, commission: 0 },
+      { date: '2026-10-28', type: 'deposit', amount: 17.00, note: 'ახალი დეპოზიტი ($17.00)' },
+      // --- 26 ოქტ 2026 BOG $8.15 deposit & SNDK buy (0.00640391 sh @ $1,272.6588 · FULL fill) · BOG app · 18:18 · NJ.c662e71e · net cash $0.00 ---
+      { date: '2026-10-26', type: 'buy',     ticker: 'SNDK', shares: 0.00640391, price: 1272.6588, commission: 0 },
+      { date: '2026-10-26', type: 'deposit', amount: 8.15, note: 'ახალი დეპოზიტი ($8.15)' },
       // --- 12 ოქტ 2026 BOG $75.00 deposit & SNDK buy (0.05041478 sh @ $1,487.6588 · FULL fill) · BOG app · 15:43 · net cash $0.00 ---
       { date: '2026-10-12', type: 'buy',     ticker: 'SNDK', shares: 0.05041478, price: 1487.6588, commission: 0 },
       { date: '2026-10-12', type: 'deposit', amount: 75.00, note: 'ახალი დეპოზიტი ($75.00)' },
@@ -308,14 +319,15 @@ window.PORTFOLIOS = {
       { ticker: 'MAIN', name: 'Main Street Capital Corporation', shares: 7.87068540, avgBuy: 54.96, invested: 432.59, value: 425.32, color: '#15803d', divYield: 6.20 },
       { ticker: 'BXSL', name: 'Blackstone Secured Lending Fund', shares: 17.24634077, avgBuy: 24.49, invested: 422.34, value: 427.54, color: '#7c3aed', divYield: 12.90 },
       { ticker: 'LYG', name: 'Lloyds Banking Group plc', shares: 72.53436194, avgBuy: 5.91, invested: 428.36, value: 396.76, color: '#006a4d', divYield: 3.66 },
-      { ticker: 'SMH', name: 'VanEck Semiconductor ETF', shares: 1.40512272, avgBuy: 619.16, invested: 870.00, value: 870.00, color: '#9333ea', divYield: 0.20 },
+      { ticker: 'SMH', name: 'VanEck Semiconductor ETF', shares: 1.46910995, avgBuy: 616.77, invested: 906.10, value: 906.10, color: '#9333ea', divYield: 0.20 },
       // VOO fully sold 08 Oct 2026 (TBC app confirms 0). Log buys sum to 1.24346234 vs 1.24321045 sold — 0.00025189 sh rounding in an older entry (likely 23 Jul 0.515).
-      { ticker: 'KO',   name: 'Coca-Cola Company, The', shares: 2.84535792, avgBuy: 86.96, invested: 247.44, value: 242.45, color: '#dc2626', divYield: 3.10 },
+      { ticker: 'KO',   name: 'Coca-Cola Company, The', shares: 2.63427880, avgBuy: 86.96, invested: 229.08, value: 249.60, color: '#dc2626', divYield: 3.10 },
       { ticker: 'DIVO', name: 'Amplify CWP Enhanced Dividend ETF', shares: 4.18961032, avgBuy: 48.12, invested: 201.59, value: 195.78, color: '#0284c7', divYield: 4.50 },
       { ticker: 'QQQI', name: 'NEOS Nasdaq-100 High Income ETF', shares: 3.13557263, avgBuy: 55.89, invested: 175.25, value: 176.34, color: '#0d9488', divYield: 13.76 },
       { ticker: 'O',    name: 'Realty Income Corporation', shares: 3.69022753, avgBuy: 54.20, invested: 200.00, value: 200.00, color: '#ea580c', divYield: 6.01 },
+      // ASX fully sold 28 Oct 2026 (0.84147057 sh, realized P/L +$4.15 / +12.94% after fees)
     ],
-    cash: 0.00, // 08 Oct 2026: sell VOO ($885.02 − $2.66 fee) -> buy SMH ($870.00 + $2.61 fee), MAIN ($9.72 + $0.03 fee) -> net cash $0.00
+    cash: 0.00, // 28 Oct 2026: ASX sell $36.32 − fee $0.11 -> SMH buy $36.10 + fee $0.11 -> net cash $0.00
     priorDeposits: 0.00, // old lost TBC bank deposits $2,215.00 removed 05 Oct 2026
     priorCostBasis: 0.00,
     transactions: [
@@ -324,6 +336,19 @@ window.PORTFOLIOS = {
       //   { date: '2026-08-15', type: 'dividend', ticker: 'MAIN', amount: 0.62, note: 'monthly · net after 30% GE' },
       // Add one row per real credit from the TBC statement. Never estimate — the
       // upcoming calendar projects estimates; this array holds actual receipts only.
+      // --- 28 ოქტ 2026 TBC: ASX სრული გაყიდვა ($36.32) → SMH ყიდვა ($36.10) · TBC app · commission $0.22 · ASX realized P/L +$4.15 · net cash $0.00 ---
+      { date: '2026-10-28', type: 'buy',      ticker: 'SMH',  shares: 0.06398723, price: 564.1751, commission: 0.11 },
+      { date: '2026-10-28', type: 'sell',     ticker: 'ASX',  shares: 0.84147057, price: 43.1625,  commission: 0.11 },
+      // --- 23 ოქტ 2026 TBC: დივიდენდები ($10.69) → ASX ყიდვა ($10.66) · TBC app · commission $0.03 · net cash $0.00 ---
+      { date: '2026-10-23', type: 'buy',      ticker: 'ASX',  shares: 0.27739611, price: 38.4288,  commission: 0.03 },
+      // --- 23 ოქტ 2026 BXSL & QQQI dividends · TBC app · net cash $10.69 ---
+      { date: '2026-10-23', type: 'dividend', ticker: 'BXSL', amount: 9.30, note: 'დივიდენდის ჩარიცხვა $13.28 − გადასახადი $3.98 = წმინდა $9.30' },
+      { date: '2026-10-23', type: 'dividend', ticker: 'QQQI', amount: 1.39, note: 'დივიდენდის ჩარიცხვა $1.99 − გადასახადი $0.60 = წმინდა $1.39' },
+      // --- 22 ოქტ 2026 TBC: KO ნაწილობრივი გაყიდვა ($20.00) + ნაშთი $1.43 → ASX ყიდვა ($21.31) · TBC app · commission $0.12 · KO realized P/L +$1.58 · net cash $0.00 ---
+      { date: '2026-10-22', type: 'buy',      ticker: 'ASX',  shares: 0.56407446, price: 37.7787,  commission: 0.06 },
+      { date: '2026-10-22', type: 'sell',     ticker: 'KO',   shares: 0.21107912, price: 94.7512,  commission: 0.06 },
+      // --- 15 ოქტ 2026 MAIN monthly dividend · TBC app · net cash $1.43 ---
+      { date: '2026-10-15', type: 'dividend', ticker: 'MAIN', amount: 1.43, note: 'დივიდენდის ჩარიცხვა $2.04 − გადასახადი $0.61 = წმინდა $1.43' },
       // --- 08 ოქტ 2026 TBC rotation: VOO გაყიდვა ($885.02) → SMH ($870.00) + MAIN ($9.72) · TBC app · commission $5.30 · VOO realized P/L +$14.71 · net cash $0.00 ---
       { date: '2026-10-08', type: 'buy',      ticker: 'MAIN', shares: 0.17987075, price: 54.0388,  commission: 0.03 },
       { date: '2026-10-08', type: 'buy',      ticker: 'SMH',  shares: 0.40512272, price: 619.1704, commission: 0 },
